@@ -6,7 +6,13 @@
 
   <title>User Profile</title>
 
-  <link rel="stylesheet" href="">
+  <style>
+    #navbar, #nav-item {
+    /*font-family: 'Pacifico', cursive;
+    font-size: 1.5rem;*/
+    background-color: #ff5ec4;
+  }
+</style>
   <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -17,7 +23,7 @@
 <body>
    <!-- nav bar (adapted from Bootstrap) -->
     <nav id="navbar" class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="users">Yee Haw</a>
+        <a class="navbar-brand" href="users.html" style="color:#ffe600;">User Profile</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,9 +39,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="walks.html">walks</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="users.html" style="color:#ffe600;">users<span
-                            class="sr-only">(current)</span></a>
+
                 </li>
             </ul>
         </div>
