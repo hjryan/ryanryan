@@ -2,4 +2,7 @@
 Hannah and Ryan build a database
 
 
-hmmmmmmmmm can i make changes
+➔ Users (Ryan - User details/scheduling page)
+➔ Walks (Ryan - Available walks - Users’ scheduled walks)
+➔ Locales (Hannah - Locale details)
+➔ Activities (Hannah - Activities available at a locale)
