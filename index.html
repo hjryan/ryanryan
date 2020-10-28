@@ -35,7 +35,7 @@
 <body>
    <!-- nav bar (adapted from Bootstrap) -->
     <nav id="navbar" class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="users.html" style="color:#ffe600;">User Profile</a>
+        <a class="navbar-brand" href="index.html" style="color:#ffe600;">User Profile</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -65,12 +65,12 @@
     </h3>
     <h3>User ID: {User's ID}</h3>
     <h3>Current Locale: {Name of user's current locale}</h3>
-    <h3>Scheduled Walks</h3>
+    <h3>Current Walks</h3>
     <ul>
         <li>{One Walk}</li>
         <li>{Another Walk}</li>
     </ul>
-    <h3>Scheduled Activites</h3>
+    <h3>Current Activites</h3>
     <ul>
         <li>{Some User Activities}</li>
     </ul>
@@ -78,9 +78,11 @@
   <div>
     <h3>Add a new user</h3>
     <form id="addNew">
-        <input type="text" name="Username" placeholder="Username" required>
-        <input type="text" name="currentLocale" placeholder="Where are you?" required>
+        <input type="text" name="firstName" placeholder="first name" required>
+        <input type="text" name="lastName" placeholder="last name" required>
+        <input type="text" name="localeName" placeholder="where are you?" required>
         <input type="submit" value="submit" id="addNewUserButton" required>
+        <!-- this should trigger first an insert statement to the locales table for the locale name & userID (locales table needs to have a rule about adding a locale that another user is currently assigned to). this should also populate the users table. -->
     </form>
   </div>
 </body>
