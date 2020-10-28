@@ -1,6 +1,8 @@
 # ryanryan
 Hannah and Ryan build a database
 
+this lives here https://web.engr.oregonstate.edu/~ryanh/340/
+
 
 ***process flow:***  
 
