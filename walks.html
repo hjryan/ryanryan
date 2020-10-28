@@ -59,16 +59,17 @@
             </ul>
         </div>
     </nav>
-    <h2>A walk maintains the travel data from one locale to another!</h2>
+    <h2>Changing locales?</h2> 
+    <h5>Let us know where you're going to help us help you find an activity.</h5>
     <p>add a walk:</p>
     <form id="addNew">
+        <input type="number" name="userID" placeholder="user ID" required>
         <input type="text" name="walkName" placeholder="walk name" required>
         <select name="destination" required>
             <option value=0>where ya headed?</option>
             <option value=1>PARIS</option>
             <option value=2>SAN ANTONIO</option>
         </select>
-        <input type="number" name="userID" placeholder="user ID" required>
         <input type="submit" value="i'm going on this walk right now!" id="addNewButton" required>
     </form>
     <br>
