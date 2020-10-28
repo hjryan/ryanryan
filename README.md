@@ -3,6 +3,7 @@ Hannah and Ryan build a database
 
 
 ***process flow:***
+  
 new users fill out the "add a new user" form on their user profile.  
 	- this populates:    
 		- users table:  
