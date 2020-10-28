@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #3498db;
+            /*font-family: 'Pacifico', cursive;*/
+        }
+        table {
+            font-family: 'Roboto';
+        }
+        th {
+            background-color: white;
+        }
+    </style>
+
+    <title>Locales</title>
+    <!-- ○ localeID: int, autoincrement, not NULL, PK
+    ○ localeName: varchar, not NULL
+    ○ userID: int, can be NULL, FK -->
+</head>
+
+<body>
+    <h1>A locale maintains data for regions of your quarantine location</h1>
+    <br>
+    <p>add a locale:</p>
+    <form id="addNew">
+        <input type="text" name="localeName" placeholder="locale name" required>
+        <input type="number" name="userID" placeholder="user ID" required>
+        <input type="submit" value="submit" id="addNewButton" required>
+    </form>
+
+    <p>pre-existing locales:</p>
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
