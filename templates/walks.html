@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap" rel="stylesheet">
+  <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <style>
+    body {
+  /*  background-color: #ffe600;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    text-align: center; 
+    font-weight:light;*/
+  }
+
+    #navbar, #nav-item {
+    font-family: 'Pacifico', cursive;
+    /*font-size: 1.5rem;*/
+    background-color: #ff5ec4;
+  }
+  </style>
+
+    <title>Walks</title>
+   <!--  Walks: A walk maintains the travel data from one locale to another.
+    ○ walkID: int, autoincrement, not NULL, PK
+    ○ walkName: varchar, not NULL
+    ○ destination: int - localeID, FK, not NULL
+    ○ origin: int - localeID, FK, not NULL
+    ○ userID: int, FK, NULL -->
+</head>
+
+<body>
+    <nav id="navbar" class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="walks.html" style="color:#ffe600;">Walks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="locales.html">locales</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="activities.html">activities</a>
+                </li>
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <h2>Changing locales?</h2> 
+    <h5>Let us know where you're going to help us help you find an activity.</h5>
+    <p>add a walk:</p>
+    <form id="addNew">
+        <input type="number" name="userID" placeholder="user ID" required>
+        <input type="text" name="walkName" placeholder="walk name" required>
+        <select name="destination" required>
+            <option value=0>where ya headed?</option>
+            <option value=1>PARIS</option>
+            <option value=2>SAN ANTONIO</option>
+        </select>
+        <input type="submit" value="i'm going on this walk right now!" id="addNewButton" required>
+    </form>
+    <br>
+    <p>pre-existing walks:</p>
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
