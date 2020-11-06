@@ -19,7 +19,7 @@ posts = [
 ]
 
 user = {
-    'firstName': NULL
+    'firstName': "fkjhjekfwjkf"
 }
 
 @app.route('/')
