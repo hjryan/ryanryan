@@ -5,7 +5,12 @@
     ○ userID: int, can be NULL, FK -->
     <h2>Please let us know where you're located!</h2>
     <p> Each user should be able to see the full list of locales. 
-    <p> The form below should check to see if the locale entered exists in the locales table. If it does, and the linked userID is NULL, there is no one currently there, so the users_in_locales table should be updated accordingly. If the linked userID matches the current user's ID, this should return an error, letting them know we are already aware they are at that location. Otherwise, it should add the locale to the locales table, and add the userID & locale to the users_in_locales table, and generate a success message.
+    <p> The form below should check to see if the locale entered exists in the locales table. 
+        <ol>
+            <li>If it does, and the linked userID is NULL, there is no one currently there, so the users_in_locales table should be updated accordingly.</li>
+            <li>If the linked userID matches the current user's ID, this should return an error, letting them know we are already aware they are at that location.</li>
+            <li>Otherwise, it should add the locale to the locales table, and add the userID & locale to the users_in_locales table, and generate a success message.</li>
+        </ol>
     <p>where y'at?</p>
     <form id="addNew">
         <input type="text" name="localeName" placeholder="locale name" required>
