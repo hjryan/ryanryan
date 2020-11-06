@@ -10,7 +10,10 @@ user = {
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='User Page', user=user)
+    if user.firstName == "First Name":
+        return redirect(url_for('login'))
+    else:
+        return render_template('index.html', title='User Page', user=user)
 
 @app.route('/home')
 def home():
@@ -33,6 +36,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.firstName.data}!', 'success')
+        user.firstName = form.firstName.data
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
@@ -42,6 +46,7 @@ def login():
     if form.validate_on_submit():
         if form.firstName.data == 'hotdog' and form.password.data == 'password':
             flash(f'Welcome {form.firstName.data}!', 'success')
+            user.firstName = form.firstName.data
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful! Please try again.', 'danger')
