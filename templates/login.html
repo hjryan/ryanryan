@@ -5,7 +5,7 @@
         <form>
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Join Today</legend>
+            <legend class="border-bottom mb-4">Welcome back!</legend>
             <div class="form-group">
                 {{ form.username.label(class="form-control-label") }}
                 {{ form.username(class="form-control form-control-lg") }}
@@ -13,10 +13,6 @@
             <div class="form-group">
                 {{ form.password.label(class="form-control-label") }}
                 {{ form.password(class="form-control form-control-lg") }}
-            </div>
-            <div class="form-group">
-                {{ form.confirm_password.label(class="form-control-label") }}
-                {{ form.confirm_password(class="form-control form-control-lg") }}
             </div>
         </fieldset>
         <div class="form-group">
@@ -26,7 +22,7 @@
 </div>
 <div class="border-top pt-3">
     <small>
-        Don't have an account? <a class="ml-2" href="{{ url_for('register') }}"> Log in</a>
+        Don't have an account? <a class="ml-2" href="{{ url_for('register') }}"> Create one</a>
     </small>
 </div>
 {% endblock content %}
