@@ -1,66 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap" rel="stylesheet">
-  <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-  <style>
-    body {
-    /*background-color: #ffe600;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    text-align: center; 
-    font-weight:light;*/
-  }
-
-    #navbar, #nav-item {
-    font-family: 'Pacifico', cursive;
-    /*font-size: 1.5rem;*/
-    background-color: #ff5ec4;
-  }
-  </style>
-
-
-
-    <title>Activities</title>
+{% extends 'layout.html' %}
+{% block content %}
     <!-- Activities: An activity maintains the data for things to do at a locale
     ○ activityID: int, autoincrement, not null, PK
     ○ activityName: varchar, not NULL
     ○ userID: int, can be NULL, FK
     ○ localeID: int, not NULL, FK -->
-</head>
 
-<body>
-    <!-- nav bar (adapted from Bootstrap) -->
-    <nav id="navbar" class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="activities.html" style="color:#ffe600;">Activities</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="locales.html">locales</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="walks.html">walks</a>
-                </li>
-
-                </li>
-            </ul>
-        </div>
-    </nav>
     <h2>Book an activity!</h2>
     <p>add an activity:</p>
     <form id="addNew">
@@ -72,7 +17,4 @@
     <br>
     <p>pre-existing activities:</p>
     
-    <script src="script.js"></script>
-</body>
-
-</html>
+{% endblock content %}
