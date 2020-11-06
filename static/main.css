@@ -13,11 +13,6 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #ff5ec4;
 }
 
-#navbar, #nav-item {
-    font-family: 'Pacifico', cursive;
-    /*font-size: 1.5rem;*/
-    background-color: #ff5ec4;
-
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
 }
