@@ -52,7 +52,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-    	if form.username.data == 'hotdog' and form.password.data == 'password':
+    	if form.firstName.data == 'hotdog' and form.password.data == 'password':
     		flash('Ya logged in!', 'success')
     		return redirect(url_for('index'))
     	else:
