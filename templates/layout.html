@@ -29,15 +29,15 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
-						<a class="nav-item nav-link" href="/home">Home</a>
-						<a class="nav-item nav-link" href="/locales">Locales</a>
-						<a class="nav-item nav-link" href="/walks">Walks</a>
-						<a class="nav-item nav-link" href="/activities">Activities</a>
+						<a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+						<a class="nav-item nav-link" href="{{ url_for('locales') }}">Locales</a>
+						<a class="nav-item nav-link" href="{{ url_for('walks') }}">Walks</a>
+						<a class="nav-item nav-link" href="{{ url_for('activities') }}">Activities</a>
 					</div>
 					<!-- Navbar Right Side -->
 					<div class="navbar-nav">
-						<a class="nav-item nav-link" href="/login">Login</a>
-						<a class="nav-item nav-link" href="/register">Register</a>
+						<a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+						<a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
 					</div>
 				</div>
 			</div>

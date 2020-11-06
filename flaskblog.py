@@ -52,7 +52,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
     	if form.username.data == 'hotdog' and form.password.data == 'password':
-    		flash('You have been logged in!', 'success')
+    		flash('Ya logged in!', 'success')
     		return redirect(url_for('index'))
     	else:
     		flash('Login unsuccessful! Please try again.', 'danger')
