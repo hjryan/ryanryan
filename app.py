@@ -3,8 +3,6 @@ from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
-
 posts = [
     {
     'author': 'Hot Dog',
@@ -20,9 +18,13 @@ posts = [
     }
 ]
 
+user = {
+    'firstName': NULL
+}
+
 @app.route('/')
 def index():
-    return render_template('index.html', title='User Page')
+    return render_template('index.html', title='User Page', name=user.firstName)
 
 @app.route('/home')
 def home():
@@ -44,9 +46,9 @@ def locales():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        name = form.firstName.data
         flash(f'Account created for {form.firstName.data}!', 'success')
-        return redirect(url_for('index'), name=name)
+        user.firstName = form.firstName.data
+        return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -55,6 +57,7 @@ def login():
     if form.validate_on_submit():
         if form.firstName.data == 'hotdog' and form.password.data == 'password':
             flash(f'Welcome {form.firstName.data}!', 'success')
+            user.firstName = form.firstName.data
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful! Please try again.', 'danger')
