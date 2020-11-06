@@ -10,10 +10,7 @@ user = {
 
 @app.route('/')
 def index():
-    if user.firstName == "First Name":
-        return redirect(url_for('login'))
-    else:
-        return render_template('index.html', title='User Page', user=user)
+    return render_template('index.html', title='User Page', user=user)
 
 @app.route('/home')
 def home():
