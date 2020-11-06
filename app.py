@@ -4,8 +4,7 @@ from forms import RegistrationForm, LoginForm
 app = Flask(__name__)
 
 user = {
-    'firstName': "hannaaaaaaah"
-
+    'firstName': "First Name"
 }
 
 @app.route('/')
@@ -46,6 +45,6 @@ def login():
         else:
             flash('Login unsuccessful! Please try again.', 'danger')
     return render_template('login.html', title='Log In', form=form)
-
+    
 if __name__ == '__main__':
     app.run(debug=True)
