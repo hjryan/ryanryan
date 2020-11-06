@@ -1,11 +1,11 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-  <div class="content-section">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Welcome back!</legend>
-           <div class="form-group">
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Welcome back!</legend>
+                <div class="form-group">
                     {{ form.firstName.label(class="form-control-label") }}
 
                     {% if form.firstName.errors %}
