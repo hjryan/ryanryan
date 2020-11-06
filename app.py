@@ -33,7 +33,6 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.firstName.data}!', 'success')
-        user.firstName = form.firstName.data
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
@@ -43,7 +42,6 @@ def login():
     if form.validate_on_submit():
         if form.firstName.data == 'hotdog' and form.password.data == 'password':
             flash(f'Welcome {form.firstName.data}!', 'success')
-            user.firstName = form.firstName.data
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful! Please try again.', 'danger')
