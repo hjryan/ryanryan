@@ -26,7 +26,7 @@ def about():
     return render_template('about.html', title='About')
 
 @app.route('/activities')
-def about():
+def activities():
     return render_template('activities.html', title='Activities')
 
 if __name__ == '__main__':
