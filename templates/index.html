@@ -16,14 +16,4 @@
         <li>{Some User Activities}</li>
     </ul>
   </div>
-  <div>
-    <h3>Add a new user</h3>
-    <form id="addNew">
-        <input type="text" name="firstName" placeholder="first name" required>
-        <input type="text" name="lastName" placeholder="last name" required>
-        <input type="text" name="localeName" placeholder="where are you?" required>
-        <input type="submit" value="submit" id="addNewUserButton" required>
-        <!-- this should trigger first an insert statement to the locales table for the locale name & userID (locales table needs to have a rule about adding a locale that another user is currently assigned to). this should also populate the users table. -->
-    </form>
-  </div>
 {% endblock content %}

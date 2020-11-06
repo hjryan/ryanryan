@@ -16,3 +16,6 @@ pycparser==2.18
 six==1.11.0
 Werkzeug==0.14.1
 WTForms==2.1
+PyMySQL==0.9.3
+psycopg2==2.8.5
+flask-heroku==0.1.9
