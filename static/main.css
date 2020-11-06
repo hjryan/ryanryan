@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6 {
     /*font-size: 1.5rem;*/
     background-color: #ff5ec4;
 
-.site-header .navbar-nav .nav-link {
+/*.site-header .navbar-nav .nav-link {
   color: #cbd5db;
 }
 
@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .site-header .navbar-nav .nav-link.active {
   font-weight: 500;
-}
+}*/
 
 .content-section {
   background: #ffffff;
