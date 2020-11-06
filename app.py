@@ -19,7 +19,7 @@ posts = [
 ]
 
 user = {
-    'firstName': "fkjhjekfwjkf"
+    'firstName': "hannaaaaaaah"
 }
 
 @app.route('/')
@@ -47,7 +47,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.firstName.data}!', 'success')
-        user.firstName = form.firstName.data
+        # user.firstName = form.firstName.data
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
