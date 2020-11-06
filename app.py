@@ -3,23 +3,9 @@ from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
 
-posts = [
-    {
-    'author': 'Hot Dog',
-    'title': 'blog post 1',
-    'content': 'akjkgjskjgtkwtg',
-    'date_posted': 'April 20, 2018'
-    },
-    {
-    'author': 'Hit Dig',
-    'title': 'blog post 3000',
-    'content': 'dflkfa',
-    'date_posted': 'December 20, 2018'
-    }
-]
-
 user = {
     'firstName': "hannaaaaaaah"
+
 }
 
 @app.route('/')
@@ -28,7 +14,7 @@ def index():
 
 @app.route('/home')
 def home():
-    return render_template('home.html', posts=posts)
+    return render_template('home.html')
 
 @app.route('/activities')
 def activities():
@@ -47,7 +33,6 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.firstName.data}!', 'success')
-        # user.firstName = form.firstName.data
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
@@ -57,7 +42,6 @@ def login():
     if form.validate_on_submit():
         if form.firstName.data == 'hotdog' and form.password.data == 'password':
             flash(f'Welcome {form.firstName.data}!', 'success')
-            user.firstName = form.firstName.data
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful! Please try again.', 'danger')
