@@ -28,5 +28,13 @@ def home():
 def activities():
     return render_template('activities.html', title='Activities')
 
+@app.route('/walks')
+def walks():
+    return render_template('walks.html', title='Walks')
+
+@app.route('/locales')
+def locales():
+    return render_template('locales.html', title='Locales')
+
 if __name__ == '__main__':
 	app.run(debug=True)
