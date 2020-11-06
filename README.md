@@ -2,6 +2,7 @@
 Hannah and Ryan build a database
 
 this lives here https://web.engr.oregonstate.edu/~ryanh/340/
+also here https://quarpedia.herokuapp.com/
 
 
 ***process flow:***  
