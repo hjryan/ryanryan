@@ -1,20 +1,24 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h2>Pages</h2>
+<h4>Register</h4>
+<p>The registration page adds a new user to the Users table.</p>
+<p>If the locale provided is not yet in the Locales table, it is added here.</p>
+<p>Finally, an entry is added to the UsersInLocales table.</p>
+<p>The form must have a constraint to only allow for locales that don't currently have users to be added by new users.</p>
+
+<h4>Login</h4>
+<p>The login page uses a select statement to find the userID, which is used to find the user's name, locale, and upcoming and available walks and activities.</p>
+
+<h4>Quarpedia</h4>
+<p>This is the user's main page, where they can see their current activity.</p>
+<p>To change any of this content, the user needs to navigate to other links:
 <ul>
-	<li><h4>Register</h4>
-		<p>The registration page adds a new user to the Users table.</p>
-		<p>If the locale provided is not yet in the Locales table, it is added here.</p>
-		<p>Finally, an entry is added to the UsersInLocales table.</p>
-		<p>The form must have a constraint to only allow for locales that don't currently have users to be added by new users.</p>
-	</li>
-	<li><h4>Login</h4>
-		<p>The login page uses a select statement to find the userID, which is used to find the user's name, locale, and upcoming and available walks and activities.</p>
-	</li>
-	<li><h4>Quarpedia</h4>
-		<p>This is the user's main page, where they can see their current activity.</p>
-		<p>To change any of this content, the user needs to navigate to other links -- locales in order to add a new place to walk to, walks to update locale, and activities to add activities to do. 
-	</li>
+	<li>locales in order to add a new place to walk to</li>
+	<li>walks to update locale</li>
+	<li>activities to add activities to do</li>
+</ul>
+
 
 
 <!-- {% for post in posts %}
