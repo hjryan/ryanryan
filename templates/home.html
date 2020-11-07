@@ -20,10 +20,10 @@ To change any of this content, the user needs to navigate to other links:
 <p>This is simply the locales table. New locales can be added, and existing locales updated here.</p>
 
 <h4>Walks</h4>
-<p>Walks updates the user's localeID in the Users table by providing the user with a dropdown of destinations they can reserve -- these (locales) are the locales no one else is currently at (locales with localeIDs not in Users).</p>
+<p>Walks updates the user's localeID in the Users table by providing the user with a dropdown of destinations they can reserve -- these (locales) are the locales no one else is currently at (locales with localeIDs not in Users). The user names this walk, and it is added to the Walks table.</p>
 
 <h4>Activities</h4>
-<p>The activities page allows users to add an activity to the Activities table. It also inserts to ActivitiesUsers by providing the user with a dropdown of activities they can reserve.</p>
+<p>The activities page allows users to add an activity to the Activities table, the ActivitiesLocales table, and the ActivitiesUsers table (ActivitiesUsers will only allow the user to book Activities in their locale, as determined by ActivitiesLocales).</p>
 
 
 <!-- {% for post in posts %}
