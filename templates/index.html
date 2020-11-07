@@ -1,17 +1,20 @@
 {% extends 'layout.html' %}
 {% block content %}
-  <div>
-    <h3>
-      Name: {{ user.firstName }}
-    </h3>
-    <h3>User ID: {{ user.userID }}</h3>
+<div>
+    <h3>Name: {{ user.firstName }}</h3>
     <h3>Current Locale: {{ user.localeName }}</h3>
-    <p>To change your locale, please select a walk at the walks page.
+    <p><small>
+        Are you tired of being here here? <a class="ml-2" href="{{ url_for('walks') }}">To change your locale, please select a walk at the walks page.</a>
+    </small>
 
     <h3>Current Activites</h3>
     <ul>
-        <li>{Some User Activities}</li>
+        <li>baking sourdough</li>
+        <li>watching Ally McBeal</li>
+        <li>coughing into the abyss</li>
     </ul>
-    <p>To find additional activities, place visit the activities page.
-  </div>
+    <p><small>
+        Is it time for something else <a class="ml-2" href="{{ url_for('activities') }}">To add new activities, please use the add function on the activities page.</a>
+    </small>
+</div>
 {% endblock content %}

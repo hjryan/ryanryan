@@ -1,14 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <!-- ○ localeID: int, autoincrement, not NULL, PK
-        ○ localeName: varchar, not NULL-->
-        <h2>Add a new locale</h2>
-        <p>This must check that the locale does not already exist within the locales table</p> 
-
-    <p>add a new locale:</p>
-    <form id="addNew">
-        <input type="text" name="localeName" placeholder="locale name" required>
-        <input type="submit" value="add this locale!" id="addNewButton" required>
-    </form>
-    <p> 
-        {% endblock content %}
+<h2>Add a new locale</h2>
+<p><i>This must check that the locale does not already exist within the locales table</i></p> 
+<p>add a new locale:</p>
+<form id="addNew">
+    <input type="text" name="localeName" placeholder="locale name" required>
+    <input type="submit" value="add this locale!" id="addNewButton" required>
+</form>
+{% endblock content %}
