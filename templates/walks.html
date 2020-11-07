@@ -1,9 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h2>Going on a walk?</h2>
-<p>This updates the currently logged in user's localeID in the Users table</p>
-<p>Walks are a bit more permanent now. Please select your destination.</p>
+<p>This updates the currently logged in user's localeID in the Users table, and adds an entry to the Walks table</p>
+<p>Walks are a bit more permanent now. Please name your walk, and select your destination.</p>
 <form id="addNew">
+    <input type="text" name="walkName" placeholder="walk name" required>
     <select name="localeName" id="localeName">
       <option value="kitchen">the kitchen</option>
       <option value="laundry">the laundry room</option>
@@ -19,5 +20,33 @@
 <small>
     Is the walk you're going on not here? <a class="ml-2" href="{{ url_for('locales') }}">Add a destination</a>
 </small>
+<h2>Edit existing Walks:</h2>
+<table>
+  <tr>
+    <th>walkID</th>
+    <th>walkName</th> 
+    <th>origin</th> 
+    <th>destination</th> 
+    <th>userID</th> 
+</tr>
+<tr>
+    <td>1</td>
+    <td>buing groceries</td>
+    <td>the kitchen</td>
+    <td>Saturn</td>
+    <td>3</td>
+    <td><input type="submit" value="update" id="updateButton" required></td>
+    <td><input type="submit" value="delete" id="deleteButton" required></td>
+</tr>
+<tr>
+    <td>1</td>
+    <td>Saturn</td>
+    <td>the kitchen</td>
+    <td>Cal Anderson Park</td>
+    <td>3</td>
+    <td><input type="submit" value="update" id="updateButton" required></td>
+    <td><input type="submit" value="delete" id="deleteButton" required></td>
+</tr>
+</table>
 </div>
 {% endblock content %}
