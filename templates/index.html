@@ -4,7 +4,7 @@
     <h3>Name: {{ user.firstName }}</h3>
     <h3>Current Locale: {{ user.localeName }}</h3>
     <p><small>
-        Are you tired of being here here? <a class="ml-2" href="{{ url_for('walks') }}">To change your locale, please select a walk at the walks page.</a>
+        Are you tired of being here here? To change your locale,<a class="ml-2" href="{{ url_for('walks') }}"> please select a walk at the walks page.</a>
     </small>
 
     <h3>Current Activites</h3>
@@ -14,7 +14,7 @@
         <li>coughing into the abyss</li>
     </ul>
     <p><small>
-        Is it time for something else <a class="ml-2" href="{{ url_for('activities') }}">To add new activities, please use the add function on the activities page.</a>
+        Is it time for something else? To add new activities,<a class="ml-2" href="{{ url_for('activities') }}"> please use the add function on the activities page.</a>
     </small>
 </div>
 {% endblock content %}
