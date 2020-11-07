@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div>
-    <h3>What's up {{ user.firstName }}, welcome to Your Home For Thrilling Quarantine Activities</h3>
+    <h3>Hi {{ user.firstName }}, welcome to Your Source of Thrilling Quarantine Activities</h3>
     <h3>Current Locale: {{ user.localeName }}</h3>
     <p><small>
         Are you tired of being here here? To change your locale,<a class="ml-2" href="{{ url_for('walks') }}"> please select a walk at the walks page.</a>
