@@ -1,24 +1,20 @@
 {% extends 'layout.html' %}
 {% block content %}
-   <!--  Walks: A walk maintains the travel data from one locale to another.
-    ○ walkID: int, autoincrement, not NULL, PK
-    ○ walkName: varchar, not NULL
-    ○ destination: int - localeID, FK, not NULL
-    ○ origin: int - localeID, FK, not NULL
-    ○ userID: int, FK, NULL -->
-    <h2>Changing locales?</h2> 
-    <p>Update your location</p>
-     <form id="addNew">
-        <label for="localeName">Add a locale</label>
+    <h2>Going on a walk?</h2>
+    <h3>Walks are a bit more permanent now. Please change your location to your destination.</h3>
+    <form id="addNew">
         <select name="localeName" id="localeName">
           <option value="volunteerpark">Volunteer Park</option>
           <option value="calandersonpark">Cal Anderson Park</option>
           <option value="interlakenpark">Interlaken Park</option>
           <option value="thearboretum">The Arboretum</option>
       </select>
-        <input type="submit" value="i'm going on this walk right now!" id="addNewButton" required>
-    </form>
-    <br>
-    <p>pre-existing walks:</p>
-    
+      <input type="submit" value="i'm going on this walk right now!" id="addNewButton" required>
+  </form>
+  <br>
+  <div class="border-top pt-3">
+    <small>
+        Is the walk you're going on not here? <a class="ml-2" href="{{ url_for('locales') }}">Add a destination</a>
+    </small>
+</div>
 {% endblock content %}
