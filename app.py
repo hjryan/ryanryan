@@ -5,9 +5,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
 user = {
-    'userID' : "User ID" #int, autoincrement, not NULL, PK
-    'firstName': "First Name" #varchar, not NULL
-    'lastName': "Last Name" #varchar, not NULL
+    'userID' : "User ID", #int, autoincrement, not NULL, PK
+    'firstName': "First Name", #varchar, not NULL
+    'lastName': "Last Name", #varchar, not NULL
     'localeID' : "Locale ID" #int, not NULL, FK
 }
 
