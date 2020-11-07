@@ -1,21 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h2>Add an activity!</h2>
-<p>This adds an entry to Activities -- below this we should see a table of existing Activities</p>
+<p>This adds an entry to Activities</p>
 <form id="addNew">
     <input type="text" name="activityName" placeholder="activity name" required>
-    <select name="localeName" id="localeName">
-      <option value="volunteerpark">the kitchen</option>
-      <option value="calandersonpark">the laundry room</option>
-      <option value="thearboretum">The Arboretum</option>
-      <option value="volunteerpark">Volunteer Park</option>
-      <option value="calandersonpark">Cal Anderson Park</option>
-      <option value="interlakenpark">Interlaken Park</option>
-      <option value="thearboretum">The Arboretum</option>
-  </select>
     <input type="submit" value="add!" id="addNewButton" required>
 </form>
-<br>
+<p></p>
+<p>Edit existing Activities:</p>
 <table>
   <tr>
     <th>activityID</th>
@@ -41,8 +33,54 @@
 </tr>
 </table>
 <br>
+<h2>Add an activity to a locale!</h2>
+<p>This adds an entry to ActivitiesLocales</p>
+<form id="addNew">
+    <select name="activityName" id="activityName">
+      <option value="bakesourdough">baking sourdough</option>
+      <option value="watchallymcbeal">watching Ally McBeal</option>
+      <option value="coughintotheabyss">coughing into the abyss</option>
+  </select>
+  <select name="localeName" id="localeName">
+      <option value="kitchen">the kitchen</option>
+      <option value="laundry">the laundry room</option>
+      <option value="saturn">Saturn</option>
+      <option value="volunteerpark">Volunteer Park</option>
+      <option value="calandersonpark">Cal Anderson Park</option>
+      <option value="interlakenpark">Interlaken Park</option>
+      <option value="thearboretum">The Arboretum</option>
+  </select>
+  <input type="submit" value="add!" id="addNewButton" required>
+</form>
+<p></p>
+<p>Existing ActivitiesLocales:</p>
+<table>
+  <tr>
+    <th>activityID</th>
+    <th>localeID</th> 
+</tr>
+<tr>
+    <td>1</td>
+    <td>6</td>
+    <td><input type="submit" value="update" id="deleteButton" required></td>
+    <td><input type="submit" value="delete" id="deleteButton" required></td>
+</tr>
+<tr>
+    <td>2</td>
+    <td>5</td>
+    <td><input type="submit" value="update" id="deleteButton" required></td>
+    <td><input type="submit" value="delete" id="deleteButton" required></td>
+</tr>
+<tr>
+    <td>3</td>
+    <td>2</td>
+    <td><input type="submit" value="update" id="deleteButton" required></td>
+    <td><input type="submit" value="delete" id="deleteButton" required></td>
+</tr>
+</table>
+<p></p>
 <h2>Book an activity!</h2>
-<p>This adds an entry to ActivitiesUsers -- below this we should see a table of existing ActivitiesUsers</p>
+<p>This adds an entry to ActivitiesUsers</p>
 <form id="addNew">
     <select name="activityName" id="activityName">
       <option value="bakesourdough">baking sourdough</option>
@@ -50,9 +88,9 @@
       <option value="coughintotheabyss">coughing into the abyss</option>
   </select>
   <input type="submit" value="i'm doing this activity now!" id="addNewButton" required>
-  <input type="submit" value="remove this" id="remButton">
-  <input type="submit" value="Changeroo" id="updateButton">
 </form>
+<p></p>
+<p>Existing ActivitiesUsers:</p>
 <table>
   <tr>
     <th>activityID</th>
@@ -65,7 +103,7 @@
     <td><input type="submit" value="delete" id="deleteButton" required></td>
 </tr>
 <tr>
-    <td>2</td>
+    <td>1</td>
     <td>4</td>
     <td><input type="submit" value="update" id="deleteButton" required></td>
     <td><input type="submit" value="delete" id="deleteButton" required></td>
