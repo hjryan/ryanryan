@@ -7,16 +7,15 @@
     ○ origin: int - localeID, FK, not NULL
     ○ userID: int, FK, NULL -->
     <h2>Changing locales?</h2> 
-    <h5>Let us know where you're going to help us help you find an activity.</h5>
-    <p>add a walk:</p>
-    <form id="addNew">
-        <input type="number" name="userID" placeholder="user ID" required>
-        <input type="text" name="walkName" placeholder="walk name" required>
-        <select name="destination" required>
-            <option value=0>where ya headed?</option>
-            <option value=1>PARIS</option>
-            <option value=2>SAN ANTONIO</option>
-        </select>
+    <p>Update your location</p>
+     <form id="addNew">
+        <label for="localeName">Add a locale</label>
+        <select name="localeName" id="localeName">
+          <option value="volunteerpark">Volunteer Park</option>
+          <option value="calandersonpark">Cal Anderson Park</option>
+          <option value="interlakenpark">Interlaken Park</option>
+          <option value="thearboretum">The Arboretum</option>
+      </select>
         <input type="submit" value="i'm going on this walk right now!" id="addNewButton" required>
     </form>
     <br>

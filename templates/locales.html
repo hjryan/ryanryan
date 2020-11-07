@@ -1,25 +1,14 @@
 {% extends 'layout.html' %}
 {% block content %}
     <!-- ○ localeID: int, autoincrement, not NULL, PK
-    ○ localeName: varchar, not NULL
-    ○ userID: int, can be NULL, FK -->
-    <h2>Please let us know where you're located!</h2>
-    <p> Each user should be able to see the full list of locales. 
-    <p> The form below should be a dynamically populated dropdown of localeNames in the locales table, with the option to add a new locale if none is listed. 
-        <ul>
-            <li>If the locale exists:</li>
-                <ul>
-                    <li>if the linked userID is NULL, there is no one currently there, so the users_in_locales table should be updated (add current userID + locale)</li>
-                    <li>if the linked userID matches the current user's ID, this should return an error, letting them know we are already aware they are at that location.</li>
-                </ul>
-            <li>Otherwise, it should add the locale to the locales table, add the userID & locale to the users_in_locales table, and generate a success message.</li>
-        </ul>
-    <p>where y'at?</p>
+        ○ localeName: varchar, not NULL-->
+        <h2>Add a new locale</h2>
+        <p>This must check that the locale does not already exist within the locales table</p> 
+
+    <p>add a new locale:</p>
     <form id="addNew">
-        <input type="dropdown" name="localeName" placeholder="locale name" required>
-        <input type="submit" value="submit" id="addNewButton" required>
+        <input type="text" name="localeName" placeholder="locale name" required>
+        <input type="submit" value="add this locale!" id="addNewButton" required>
     </form>
-    <br>
-    <p>some places you might be:</p>
-    
-{% endblock content %}
+    <p> 
+        {% endblock content %}

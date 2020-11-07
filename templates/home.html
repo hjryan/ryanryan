@@ -2,22 +2,31 @@
 {% block content %}
 <h2>Pages</h2>
 <h4>Register</h4>
-<p>The registration page adds a new user to the Users table.</p>
-<p>If the locale provided is not yet in the Locales table, it is added here.</p>
-<p>Finally, an entry is added to the UsersInLocales table.</p>
-<p>The form must have a constraint to only allow for locales that don't currently have users to be added by new users.</p>
+<p><i>If the locale provided is already present in the in the UsersLocales table, the user should not be permitted to register with that localeName</i></p>
+<p>The registration page adds a new user to the Users table -- firstName, lastName, and an autoincremented userID. </p>
+<p>If the locale provided is not yet in the Locales table, it is added -- localeName and an autoincremented localeID</p>
+<p>Finally, an entry is added to the UsersLocales table linking the user and locale.</p>
 
 <h4>Login</h4>
-<p>The login page uses a select statement to find the userID, which is used to find the user's name, locale, and upcoming and available walks and activities.</p>
+<p>The login page uses a select statement to find the user's userID, which is used to find the user's name, locale, and upcoming and available walks and activities.</p>
 
 <h4>Quarpedia</h4>
 <p>This is the user's main page, where they can see their current activity.</p>
-<p>To change any of this content, the user needs to navigate to other links:
+To change any of this content, the user needs to navigate to other links:
 <ul>
-	<li>locales in order to add a new place to walk to</li>
-	<li>walks to update locale</li>
+	<li>locales to add locales</li>
+	<li>walks to change the user's current locale</li>
 	<li>activities to add activities to do</li>
 </ul>
+
+<h4>Locales</h4>
+<p>This is simply the locales table. New locales can be added here. 
+
+<h4>Walks</h4>
+<p>Walks inserts to UsersLocales by providing the user with a dropdown of destinations they can reserve. These (locales) are filtered to only locales no one else is currently at (locales not in UsersLocales). This also results in a delete of the current UserLocale relationship.
+
+
+
 
 
 

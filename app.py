@@ -5,7 +5,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
 user = {
-    'firstName': "First Name"
+    'userID' : "User ID" #int, autoincrement, not NULL, PK
+    'firstName': "First Name" #varchar, not NULL
+    'lastName': "Last Name" #varchar, not NULL
+    'localeID' : "Locale ID" #int, not NULL, FK
 }
 
 @app.route('/')
@@ -32,7 +35,7 @@ def locales():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Account created for {form.firstName.data}!', 'success')
+        flash(f"{form.firstName.data}'s account created!", 'success')
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
