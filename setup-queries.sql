@@ -13,4 +13,13 @@ localeID INTEGER
 );
 INSERT INTO Users(firstName, lastName) VALUES("Hannah", "Ryan");
 INSERT INTO Users(firstName, lastName) VALUES("Ryan", "McKenzie");
-SELECT * FROM Users;
+CREATE TABLE Locales(
+localeID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+localeName VARCHAR(40) NOT NULL
+);
+INSERT INTO Locales(localeName) VALUES("Seattle");
+INSERT INTO Locales(localeName) VALUES("Denver");
+ALTER TABLE Users
+ADD FOREIGN KEY(localeID)
+REFERENCES Locales(localeID)
+ON DELETE SET NULL;
