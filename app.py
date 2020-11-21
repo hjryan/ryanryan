@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
+import db_con
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
@@ -50,5 +51,14 @@ def login():
             flash('Login unsuccessful! Please try again.', 'danger')
     return render_template('login.html', title='Log In', form=form)
 
+@app.route('/reset-db')
+def reset_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('setup-queries.sql', mode='r') as file:
+            db.cursor().executescript(file.read())
+        db.commit()
+    return "Database Reset"
+    
 if __name__ == '__main__':
     app.run(debug=True)
