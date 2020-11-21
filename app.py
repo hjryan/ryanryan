@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm, LocalesForm
+from forms import RegistrationForm, LoginForm
 from db_con import get_db
 import sqlite3
 
@@ -71,15 +71,26 @@ def activities():
 def walks():
     return render_template('walks.html', title='Walks')
 
+@app.route('/add-locale', methods=['GET'])
+def addLocale(localeName=None):
+    db = get_db()
+    cur = db.cursor()
+    localeName = request.args.get('localeName')   
+    if localeName:
+        added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
+    db.commit()
+    db.close()
+    return redirect('/locales')
+
 @app.route('/locales')
 def locales():
-    form = LocalesForm()
-    with app.app_context():
-        db = get_db()
-        with app.open_resource('select-locales.sql', mode='r') as file:
-            db.cursor().executescript(file.read())
-        db.commit()
-    return render_template('locales.html', title='Locales', form=form)
+    db = get_db()
+    db.row_factory = sqlite3.Row
+    cur = db.cursor()
+    data = cur.execute("""SELECT * FROM Locales""").fetchall()
+    db.commit()
+    db.close()
+    return render_template('locales.html', title='Locales', data=data)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

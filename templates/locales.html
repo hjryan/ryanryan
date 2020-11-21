@@ -1,29 +1,27 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div class="content-section">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend>Add a new locale</legend>
-            <div class="form-group">
-                {{ form.localeName.label(class="form-control-label") }}
-                {% if form.localeName.errors %}
-                {{ form.localeName(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.localeName.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.localeName(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
-        </div>
+   <h2>Add a locale!</h2>
+    <p>This adds an entry to Locales</p>
+    <form id="addNew" action="/add-locale">
+        <input type="text" name="localeName" placeholder="locale name" required>
+        <input type="submit" value="add!" id="addNewButton" required>
     </form>
-</div>
+    <p></p>
+    <h2>Edit existing Locales:</h2>
+    <table>
+    <tr>
+        <th>localeID</th>
+        <th>localeName</th> 
+    </tr>
+    {% for locale in data %}
+        <tr>
+            <td>{{locale['localeName']}}</td>
+            <td></td>
+            <td><input type="submit" value="update" id="updateButton" required></td>
+            <td><input type="submit" value="delete" id="deleteButton" required></td>
+        </tr>
+    {% endfor %}
+    </table>
 <h2>Edit existing Locales:</h2>
 <table>
   <tr>
