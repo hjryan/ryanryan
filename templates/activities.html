@@ -1,112 +1,82 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h2>Add an activity!</h2>
-<p>This adds an entry to Activities</p>
-<form id="addNew">
-    <input type="text" name="activityName" placeholder="activity name" required>
+    <h2>Add an activity!</h2>
+    <p>This adds an entry to Activities</p>
+    <form id="addNew" action="/add-activity">
+        <input type="text" name="activityName" placeholder="activity name" required>
+        <input type="submit" value="add!" id="addNewButton" required>
+    </form>
+    <p></p>
+    <h2>Edit existing Activities:</h2>
+    <table>
+    <tr>
+        <th>activityID</th>
+        <th>activityName</th> 
+    </tr>
+    {% for activity in data %}
+        <tr>
+            <td>{{activity['activityName']}}</td>
+            <td></td>
+            <td><input type="submit" value="update" id="updateButton" required></td>
+            <td><input type="submit" value="delete" id="deleteButton" required></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <br>
+    <h2>Add an activity to a locale!</h2>
+    <p>This adds an entry to ActivitiesLocales</p>
+    <form id="addNew" action='/add-activity-locale'>
+        <select name="activityName" id="activityName">
+            {% for act in data %}
+                <option value="{{act['activityID']}}">{{act['activityName']}}</option>
+            {% endfor %}
+        </select>
+        <select name="localeName" id="localeName">
+            {% for loc in locs %}
+                <option value="{{ loc['localeID'] }}">{{ loc['localeName'] }}</option>
+            {% endfor %}
+        </select>
     <input type="submit" value="add!" id="addNewButton" required>
-</form>
-<p></p>
-<h2>Edit existing Activities:</h2>
-<table>
-  <tr>
-    <th>activityID</th>
-    <th>activityName</th> 
-</tr>
-<tr>
-    <td>1</td>
-    <td>baking sourdough</td>
-    <td><input type="submit" value="update" id="updateButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-<tr>
-    <td>2</td>
-    <td>watching Ally McBeal</td>
-    <td><input type="submit" value="update" id="updateButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-<tr>
-    <td>3</td>
-    <td>coughing into the abyss</td>
-    <td><input type="submit" value="update" id="updateButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-</table>
-<br>
-<h2>Add an activity to a locale!</h2>
-<p>This adds an entry to ActivitiesLocales</p>
-<form id="addNew">
-    <select name="activityName" id="activityName">
-      <option value="bakesourdough">baking sourdough</option>
-      <option value="watchallymcbeal">watching Ally McBeal</option>
-      <option value="coughintotheabyss">coughing into the abyss</option>
-  </select>
-  <select name="localeName" id="localeName">
-      <option value="kitchen">the kitchen</option>
-      <option value="laundry">the laundry room</option>
-      <option value="saturn">Saturn</option>
-      <option value="volunteerpark">Volunteer Park</option>
-      <option value="calandersonpark">Cal Anderson Park</option>
-      <option value="interlakenpark">Interlaken Park</option>
-      <option value="thearboretum">The Arboretum</option>
-  </select>
-  <input type="submit" value="add!" id="addNewButton" required>
-</form>
-<p></p>
-<h2>Edit existing ActivitiesLocales:</h2>
-<table>
-  <tr>
-    <th>activityID</th>
-    <th>localeID</th> 
-</tr>
-<tr>
-    <td>1</td>
-    <td>6</td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-<tr>
-    <td>2</td>
-    <td>5</td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-<tr>
-    <td>3</td>
-    <td>2</td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-</table>
-<p></p>
-<h2>Book an activity!</h2>
-<p>This adds an entry to ActivitiesUsers</p>
-<form id="addNew">
-    <select name="activityName" id="activityName">
-      <option value="bakesourdough">baking sourdough</option>
-      <option value="watchallymcbeal">watching Ally McBeal</option>
-      <option value="coughintotheabyss">coughing into the abyss</option>
-  </select>
-  <input type="submit" value="i'm doing this activity now!" id="addNewButton" required>
-</form>
-<p></p>
-<h2>Edit existing ActivitiesUsers:</h2>
-<table>
-  <tr>
-    <th>activityID</th>
-    <th>userID</th> 
-</tr>
-<tr>
-    <td>1</td>
-    <td>2</td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-<tr>
-    <td>1</td>
-    <td>4</td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-<tr>
-    <td>3</td>
-    <td>7</td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
-</table>
+    </form>
+    <p></p>
+    <h2>Edit existing ActivitiesLocales:</h2>
+    <table>
+    <tr>
+        <th>activityID</th>
+        <th>localeID</th> 
+    </tr>
+    {% for act in actloc %}
+        <tr>
+            <td>{{ act['activityID'] }}</td>
+            <td>{{ act['localeID'] }}</td>
+            <td><input type="submit" value="delete" id="deleteButton" required></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <p></p>
+    <h2>Book an activity!</h2>
+    <p>This adds an entry to ActivitiesUsers</p>
+    <form id="addNew">
+        <select name="activityName" id="activityName">
+            {% for act in data %}
+                <option value="{{act['activityID']}}">{{ act['activityName'] }}</option>
+            {% endfor %}
+    </select>
+    <input type="submit" value="i'm doing this activity now!" id="addNewButton" required>
+    </form>
+    <p></p>
+    <h2>Edit existing ActivitiesUsers:</h2>
+    <table>
+    <tr>
+        <th>activityID</th>
+        <th>userID</th> 
+    </tr>
+    {% for actus in actUsers %}
+        <tr>
+            <td>{{ actus['activityID'] }}</td>
+            <td>{{ actus['userID'] }}</td>
+            <td><input type="submit" value="delete" id="deleteButton" required></td>
+        </tr>
+    {% endfor %}
+    </table>
 {% endblock content %}
