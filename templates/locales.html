@@ -7,6 +7,31 @@
     <input type="submit" value="add this locale!" id="addNewButton" required>
 </form>
 <p></p>
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend>Add a new locale!</legend>
+            <div class="form-group">
+                {{ form.localeName.label(class="form-control-label") }}
+
+                {% if form.localeName.errors %}
+                {{ form.localeName(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.localeName.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.localeName(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
 <h2>Edit existing Locales:</h2>
 <table>
   <tr>

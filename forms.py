@@ -28,3 +28,8 @@ class LoginForm(FlaskForm):
 		validators=[DataRequired()])
 	remember = BooleanField('Remember Me')
 	submit = SubmitField('Log In')
+
+class LocalesForm(FlaskForm):
+	localeName = StringField('Locale name', 
+		validators=[DataRequired(), Length(min=3, max=20)])
+	submit = SubmitField('add this locale!')
