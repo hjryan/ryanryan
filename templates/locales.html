@@ -15,60 +15,10 @@
     </tr>
     {% for locale in data %}
         <tr>
+            <td>{{locale['localeID']}}</td>
             <td>{{locale['localeName']}}</td>
-            <td></td>
             <td><input type="submit" value="update" id="updateButton" required></td>
             <td><input type="submit" value="delete" id="deleteButton" required></td>
         </tr>
     {% endfor %}
     </table>
-<h2>Edit existing Locales:</h2>
-<table>
-  <tr>
-    <th>localeID</th>
-    <th>localeName</th> 
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>the kitchen</td>
-    <td><input type="submit" value="update" id="deleteButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>the laundry room</td>
-    <td><input type="submit" value="update" id="deleteButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>Saturn</td>
-    <td><input type="submit" value="update" id="deleteButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>Volunteer Park</td>
-    <td><input type="submit" value="update" id="deleteButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>Cal Anderson Park</td>
-    <td><input type="submit" value="update" id="deleteButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>Interlaken Park</td>
-    <td><input type="submit" value="update" id="deleteButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-  </tr>
-  <tr>
-    <td>7</td>
-    <td>The Arboreturm</td>
-    <td><input type="submit" value="update" id="deleteButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-  </tr>
-</table>
-{% endblock content %}

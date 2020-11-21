@@ -15,8 +15,8 @@
     </tr>
     {% for activity in data %}
         <tr>
+            <td>{{activity['activityID']}}</td>
             <td>{{activity['activityName']}}</td>
-            <td></td>
             <td><input type="submit" value="update" id="updateButton" required></td>
             <td><input type="submit" value="delete" id="deleteButton" required></td>
         </tr>
