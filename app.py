@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
-import db_con
+from db_con import get_db
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
@@ -59,6 +59,6 @@ def reset_db():
             db.cursor().executescript(file.read())
         db.commit()
     return "Database Reset"
-    
+
 if __name__ == '__main__':
     app.run(debug=True)
