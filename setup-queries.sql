@@ -62,9 +62,3 @@ FOREIGN KEY(localeID) REFERENCES Locales(localeID) ON DELETE SET NULL
 );
 INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (1,1);
 INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (2,2);
--- Register
--- The registration page adds a new locale to the Locales table (localeName and an autoincremented localeID) if the locale does not yet exist.
-INSERT INTO Locales(localeName) VALUES(:localeNameProvidedByUser);
--- If the locale does exist in the Users table, the user should not be permitted to register there. 
--- Then the new user is added to the Users table -- firstName, lastName, an autoincremented userID, and the localeID that was just added.
-INSERT INTO Users(firstName, lastName, localeID) VALUES(:firstNameProvidedByUser, :firstNameProvidedByUser, (SELECT localeID FROM Locales WHERE localeName = :localeNameProvidedByUser);
