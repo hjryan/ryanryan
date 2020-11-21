@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, LocalesForm
 from db_con import get_db
 import sqlite3
 
@@ -73,7 +73,8 @@ def walks():
 
 @app.route('/locales')
 def locales():
-    return render_template('locales.html', title='Locales')
+    form = LocalesForm()
+    return render_template('locales.html', title='Locales', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
