@@ -54,7 +54,6 @@ def activities():
     db = get_db()
     db.row_factory = sqlite3.Row
     cur = db.cursor()
-
     data = cur.execute("""SELECT * FROM Activities""").fetchall()
     actLocals = cur.execute("SELECT * FROM ActivitiesLocales").fetchall()
     locs = cur.execute("SELECT * FROM Locales").fetchall()
@@ -69,7 +68,13 @@ def activities():
 
 @app.route('/walks')
 def walks():
-    return render_template('walks.html', title='Walks')
+    db = get_db()
+    db.row_factory = sqlite3.Row
+    cur = db.cursor()
+    data = cur.execute("""SELECT * FROM Walks""").fetchall()
+    db.commit()
+    db.close()
+    return render_template('walks.html', title='Walks', data=data)
 
 @app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):

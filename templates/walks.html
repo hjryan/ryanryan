@@ -29,24 +29,17 @@
     <th>destination</th> 
     <th>userID</th> 
 </tr>
+{% for walk in data %}
 <tr>
-    <td>1</td>
-    <td>buing groceries</td>
-    <td>1</td>
-    <td>3</td>
-    <td>3</td>
+    <td>{{walk['walkID']}}</td>
+    <td>{{walk['walkName']}}</td>
+    <td>{{walk['origin']}}</td>
+    <td>{{walk['destination']}}</td>
+    <td>{{walk['userID']}}</td>
     <td><input type="submit" value="update" id="updateButton" required></td>
     <td><input type="submit" value="delete" id="deleteButton" required></td>
 </tr>
-<tr>
-    <td>2</td>
-    <td>it's a protest</td>
-    <td>3</td>
-    <td>5</td>
-    <td>3</td>
-    <td><input type="submit" value="update" id="updateButton" required></td>
-    <td><input type="submit" value="delete" id="deleteButton" required></td>
-</tr>
+{% endfor %}
 </table>
 </div>
 {% endblock content %}
