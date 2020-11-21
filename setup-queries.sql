@@ -1,3 +1,4 @@
+PRAGMA foreign_keys = ON;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Locales;
 DROP TABLE IF EXISTS Walks;
