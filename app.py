@@ -74,6 +74,11 @@ def walks():
 @app.route('/locales')
 def locales():
     form = LocalesForm()
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('select-locales.sql', mode='r') as file:
+            db.cursor().executescript(file.read())
+        db.commit()
     return render_template('locales.html', title='Locales', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
