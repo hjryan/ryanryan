@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from forms import RegistrationForm, LoginForm
 from db_con import get_db
+import sqlite3
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
@@ -20,9 +21,51 @@ def index():
 def home():
     return render_template('home.html')
 
+@app.route('/add-activity-locale', methods=['GET'])
+def addActLoc():
+    db = get_db()
+    cur = db.cursor()
+    actID = request.args.get('activityName')
+    localeID = request.args.get('localeName')
+
+    if actID and localeID:
+        cur.execute("INSERT INTO ActivitiesLocales (activityID, localeID) VALUES (?, ?)", 
+            (actID, localeID))
+
+    db.commit()
+    db.close()
+    return redirect('/activities')
+
+@app.route('/add-activity', methods=['GET'])
+def addActivity(activityName=None):
+    db = get_db()
+    cur = db.cursor()
+    activityName = request.args.get('activityName')
+    
+    if activityName:
+        added = cur.execute("INSERT INTO Activities (activityName) VALUES (?)", (activityName,))
+
+    db.commit()
+    db.close()
+    return redirect('/activities')
+
 @app.route('/activities')
 def activities():
-    return render_template('activities.html', title='Activities')
+    db = get_db()
+    db.row_factory = sqlite3.Row
+    cur = db.cursor()
+
+    data = cur.execute("""SELECT * FROM Activities""").fetchall()
+    actLocals = cur.execute("SELECT * FROM ActivitiesLocales").fetchall()
+    locs = cur.execute("SELECT * FROM Locales").fetchall()
+    actUsers = cur.execute("SELECT * FROM ActivitiesUsers").fetchall()
+    db.commit()
+    db.close()
+    return render_template('activities.html', title='Activities', 
+        data=data, 
+        actloc=actLocals, 
+        locs=locs, 
+        actUsers=actUsers)
 
 @app.route('/walks')
 def walks():
