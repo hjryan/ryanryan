@@ -19,3 +19,4 @@ WTForms==2.1
 PyMySQL==0.9.3
 psycopg2==2.8.5
 flask-heroku==0.1.9
+sqlite3==3.28.0
