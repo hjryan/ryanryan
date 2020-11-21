@@ -30,7 +30,8 @@ def walks():
 
 @app.route('/locales')
 def locales():
-    return render_template('locales.html', title='Locales')
+    form = LocalesForm()
+    return render_template('locales.html', title='Locales', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
