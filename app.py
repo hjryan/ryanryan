@@ -18,7 +18,10 @@ user = {
 def index():
     # if user['userID'] == 0:
     #     return redirect('/register')
-    activities = cur.execute("""SELECT * FROM Activities RIGHT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE Activities.UserID = (?) """, [user['userID']]).fetchall()
+    db = get_db()
+    cur = db.cursor()
+    userID = user['userID']
+    activities = cur.execute("""SELECT * FROM Activities RIGHT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE Activities.UserID = (?) """, [userID]).fetchall()
     return render_template('index.html', title='User Page', user=user)
 
 @app.route('/home')
