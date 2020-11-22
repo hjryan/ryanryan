@@ -113,8 +113,15 @@ def locales():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    db = get_db()
+    cur = db.cursor()
+    firstName = {form.firstName.data}
+    lastName = {form.lastName.data}
+    localeName = {form.localeName.data}
+    locales_data = cur.execute("""SELECT Locales.localeID, Locales.localeName, Users.userID FROM Locales LEFT JOIN Users ON Users.localeID = Locales.localeID""").fetchall()
     if form.validate_on_submit():
         flash(f"{form.firstName.data}'s account created!", 'success')
+        print(locales_data)
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
