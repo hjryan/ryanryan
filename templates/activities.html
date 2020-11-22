@@ -7,13 +7,13 @@
         <input type="submit" value="add!" id="addNewButton" required>
     </form>
     <p></p>
-    <h2>Edit existing activities:</h2>
+    <h2>Edit existing (global) activities:</h2>
     <table>
     <tr>
         <th>activityID</th>
         <th>activityName</th> 
     </tr>
-    {% for activity in data %}
+    {% for activity in activities %}
         <tr>
             <td>{{activity['activityID']}}</td>
             <td>{{activity['activityName']}}</td>
@@ -27,54 +27,52 @@
     <p>This adds an entry to ActivitiesLocales</p>
     <form id="addNew" action='/add-activity-locale'>
         <select name="activityName" id="activityName">
-            {% for act in data %}
-                <option value="{{act['activityID']}}">{{act['activityName']}}</option>
+            {% for activity in activities %}
+                <option value="{{activity['activityID']}}">{{activity['activityName']}}</option>
             {% endfor %}
         </select>
         <select name="localeName" id="localeName">
-            {% for loc in locs %}
-                <option value="{{ loc['localeID'] }}">{{ loc['localeName'] }}</option>
+            {% for locale in locales %}
+                <option value="{{ locale['localeID'] }}">{{ locale['localeName'] }}</option>
             {% endfor %}
         </select>
     <input type="submit" value="add!" id="addNewButton" required>
     </form>
     <p></p>
-    <h2>Edit existing activitieslocales:</h2>
+    <h2>Delete existing activities from your locale:</h2>
+    <p>This deletes entries from ActivitiesLocales. Only activities in your locale are available.</p>
     <table>
     <tr>
-        <th>activityID</th>
-        <th>localeID</th> 
+        <th>activityName</th>
     </tr>
-    {% for act in actloc %}
+    {% for activity in activitiesLocales %}
         <tr>
-            <td>{{ act['activityID'] }}</td>
-            <td>{{ act['localeID'] }}</td>
+            <td>{{ activity['activityName'] }}</td>
             <td><input type="submit" value="delete" id="deleteButton" required></td>
         </tr>
     {% endfor %}
     </table>
     <p></p>
     <h2>Book an activity!</h2>
-    <p>This adds an entry to ActivitiesUsers</p>
+    <p>This adds an entry to ActivitiesUsers. Only activities in your locale that you aren't yet doing are available.</p>
     <form id="addNew" action='/add-activity-user'>
-        <select name="activityName" id="activityName">
-            {% for act in data %}
-                <option value="{{act['activityID']}}">{{ act['activityName'] }}</option>
+        <select name="activityID" id="activityID">
+            {% for activity in activitiesInYourLocale %}
+                <option value="{{activity['activityID']}}">{{ activity['activityName'] }}</option>
             {% endfor %}
     </select>
     <input type="submit" value="i'm doing this activity now!" id="addNewButton" required>
     </form>
     <p></p>
-    <h2>Edit existing activitiesusers:</h2>
+    <h2>Delete my existing activities:</h2>
+    <p>This deletes from ActivitiesUsers. It is dynamically populated to only the current user's activities.</p>
     <table>
     <tr>
-        <th>activityID</th>
-        <th>userID</th> 
+        <th>activityName</th>
     </tr>
-    {% for actus in actUsers %}
+    {% for activityUser in activitiesUsers %}
         <tr>
-            <td>{{ actus['activityID'] }}</td>
-            <td>{{ actus['userID'] }}</td>
+            <td>{{ activityUser['activityName'] }}</td>
             <td><input type="submit" value="delete" id="deleteButton" required></td>
         </tr>
     {% endfor %}
