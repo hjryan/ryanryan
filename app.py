@@ -120,17 +120,16 @@ def completeRegistration(localeName=None):
     if localeName:
         localeAdded = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
         localeID = cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchall()
-        userAdded = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
-        user.userID = cur.execute("SELECT userID from Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchall()
+        print(localeID)
+        #userAdded = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
+        #user.userID = cur.execute("SELECT userID from Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchall()
     db.commit()
     db.close()
+    flash(f"{firstName}'s account created!", 'success')
     return redirect('/index')
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
-    firstName = request.args.get('firstName')
-    flash(f"{firstName}'s account created!", 'success')
-    #     return redirect(url_for('index'))
     return render_template('register.html', title='Register')
 
 @app.route('/login', methods=['GET', 'POST'])
