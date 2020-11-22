@@ -124,18 +124,17 @@ def register():
     # if so, is someone there? don't let them register there
 
     # otherwise, add locale
-    def addLocale(localeName=None):
-    db = get_db()
-    cur = db.cursor()
-    localeName = request.args.get('localeName')   
+    def addLocale(localeName=None):  
     if localeName:
         added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
-    db.commit()
-    db.close()
+        db.commit()
+    
 
     if form.validate_on_submit():
         flash(f"{form.firstName.data}'s account created!", 'success')
         added = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
+        db.commit()
+        db.close()
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
