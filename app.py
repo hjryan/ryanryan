@@ -83,7 +83,7 @@ def addWalk(walkName=None):
         added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?, ?, ?, ?)", (walkName, origin, destination, userID,))
     db.commit()
     db.close()
-    return redirect('walks.html')
+    return redirect('/walks')
 
 @app.route('/walks')
 def walks():
@@ -105,7 +105,7 @@ def addLocale(localeName=None):
         added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
     db.commit()
     db.close()
-    return redirect('locales.html')
+    return redirect('/locales')
 
 @app.route('/locales')
 def locales():
