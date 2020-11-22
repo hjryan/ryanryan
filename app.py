@@ -84,7 +84,7 @@ def walks():
     db.row_factory = sqlite3.Row
     cur = db.cursor()
     data = cur.execute("""SELECT * FROM Walks""").fetchall()
-    locales = cur.execute("SELECT * FROM Locales WHERE (SELECT Locales.localeName FROM Locales LEFT JOIN Users ON Locales.localeID = Users.LocaleID WHERE Users.LocaleID IS NULL").fetchall() # only locales no one is at
+    locales = cur.execute("SELECT * FROM Locales WHERE (SELECT Locales.localeName FROM Locales LEFT JOIN Users ON Locales.localeID = Users.LocaleID WHERE Users.LocaleID IS NULL)").fetchall() # only locales no one is at
     db.commit()
     db.close()
     return render_template('walks.html', title='Walks', locales=locales, data=data)
