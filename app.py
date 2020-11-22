@@ -21,7 +21,7 @@ def index():
     db = get_db()
     cur = db.cursor()
     userID = user['userID']
-    activities = cur.execute("""SELECT * FROM Activities RIGHT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE Activities.UserID = (?) """, [userID]).fetchall()
+    activities = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesUsers LEFT JOIN Activities ON Activities.activityID = ActivitiesUsers.activityID WHERE Activities.UserID = (?) """, [userID]).fetchall()
     return render_template('index.html', title='User Page', user=user)
 
 @app.route('/home')
