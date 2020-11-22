@@ -117,7 +117,7 @@ def completeRegistration(localeName=None):
     localeName = request.args.get('localeName')   
     if localeName:
         added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
-        # localeID = cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchall()
+        localeID = cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchall()
         # added = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
     db.commit()
     db.close()
