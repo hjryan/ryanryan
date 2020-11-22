@@ -68,7 +68,7 @@ def addWalk():
     cur = db.cursor()
     userID = 1
     origin = 1
-    localeID = request.args.get('localeName')
+    localeID = request.args.get('destination')
     print(userID, origin, localeID)
     if userID and localeID:
         # cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
