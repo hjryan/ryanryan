@@ -89,7 +89,6 @@ def walks():
     db.close()
     return render_template('walks.html', title='Walks', locales=locales, data=data)
 
-@app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
     db = get_db()
     cur = db.cursor()
@@ -98,6 +97,9 @@ def addLocale(localeName=None):
         added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
     db.commit()
     db.close()
+
+@app.route('/add-locale', methods=['GET'])
+    addLocale()
     return redirect('/locales')
 
 @app.route('/locales')
