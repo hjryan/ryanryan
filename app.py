@@ -39,7 +39,7 @@ def addActLoc():
             (actID, localeID))
     db.commit()
     db.close()
-    return redirect('activities.html')
+    return redirect('/activities')
 
 @app.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
@@ -50,7 +50,7 @@ def addActivity(activityName=None):
         added = cur.execute("INSERT INTO Activities (activityName) VALUES (?)", (activityName,))
     db.commit()
     db.close()
-    return redirect('activities.html')
+    return redirect('/activities')
 
 @app.route('/activities')
 def activities():
@@ -73,8 +73,8 @@ def activities():
 def addWalk(walkName=None):
     db = get_db()
     cur = db.cursor()
-    userID = 1 # fix me
-    origin = 1 # fix me
+    userID = user['userID']
+    origin = user['localeID']
     walkName = request.args.get('walkName')
     destination = request.args.get('destination')
     if userID and destination:
