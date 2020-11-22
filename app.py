@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
 user = {
-    'userID' : "User ID", #int, autoincrement, not NULL, PK
+    'userID' : 0, #int, autoincrement, not NULL, PK
     'firstName': "First Name", #varchar, not NULL
     'lastName': "Last Name", #varchar, not NULL
     'localeName' : "Locale Name" #this should be from a diff table lol
@@ -121,8 +121,8 @@ def completeRegistration(localeName=None):
         localeAdded = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
         localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
         userAdded = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
-        user.userID = (cur.execute("SELECT userID from Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
-        
+        user['userID'] = (cur.execute("SELECT userID from Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
+
     db.commit()
     db.close()
     #flash(f"{firstName}'s account created!", 'success')
