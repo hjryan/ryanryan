@@ -167,8 +167,9 @@ def completeLogin(localeName=None):
     localeName = request.args.get('localeName')
     localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
     # TO DO: check that user exists
-    # flash('Login unsuccessful! Please try again.', 'danger')
-    if localeName:
+    if firstName in (cur.execute("SELECT firstName FROM Users").fetchone())[0]:
+        flash('Login unsuccessful! Please try again.', 'danger')
+    else:
         # update this lil dictionary which is used in the user's home page
         user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
         user['firstName'] = firstName
