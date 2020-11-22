@@ -125,9 +125,9 @@ def register():
 
     # otherwise, add locale
     def addLocale(localeName=None):  
-    if localeName:
-        added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
-        db.commit()
+        if localeName:
+            added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
+            db.commit()
     
 
     if form.validate_on_submit():
