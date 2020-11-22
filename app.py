@@ -119,9 +119,15 @@ def register():
     lastName = {form.lastName.data}
     localeName = {form.localeName.data}
     locales_data = cur.execute("""SELECT Locales.localeID, Locales.localeName, Users.userID FROM Locales LEFT JOIN Users ON Users.localeID = Locales.localeID""").fetchall()
+    # additional validations needed --
+    # use locales data to check if locale already exists
+    # if so, is someone there? don't let them register there
+    # otherwise, add locale
+    redirect('/add-locale', localeName=localeName)
     if form.validate_on_submit():
         flash(f"{form.firstName.data}'s account created!", 'success')
-        print(locales_data)
+        
+        
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
