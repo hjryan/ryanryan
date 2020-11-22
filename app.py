@@ -126,7 +126,7 @@ def completeRegistration(localeName=None):
         user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
         user['firstName'] = firstName
         user['lastName'] = lastName
-        user['localeName'] = localeID
+        user['localeName'] = localeName
         flash(f"{firstName}'s account created!", 'success')
     db.commit()
     db.close()
