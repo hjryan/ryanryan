@@ -70,8 +70,8 @@ def addWalk(walkName=None):
     origin = 1
     destination = 3
     #destination = request.args.get('destination')
-    print(userID, origin, localeID)
-    if userID and localeID:
+    print(userID, origin, destination)
+    if userID and destination:
         # cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
         #     (userID, localeID))
         added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?)", (walkName, origin, destination, userID,))
