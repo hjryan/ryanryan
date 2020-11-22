@@ -68,12 +68,13 @@ def addWalk():
     cur = db.cursor()
     userID = 1
     origin = 1
-    localeID = request.args.get('destination')
+    destination = 3
+    #destination = request.args.get('destination')
     print(userID, origin, localeID)
     if userID and localeID:
         # cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
         #     (userID, localeID))
-        added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?)", (walkName, origin, localeID, userID,))
+        added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?)", (walkName, origin, destination, userID,))
     db.commit()
     db.close()
     return redirect('/walks')
