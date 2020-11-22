@@ -66,14 +66,13 @@ def activities():
 def addWalk(walkName=None):
     db = get_db()
     cur = db.cursor()
-    userID = 1
-    origin = 1
+    userID = 1 # fix me
+    origin = 1 # fix me
     walkName = request.args.get('walkName')
     destination = request.args.get('destination')
-    print(userID, origin, destination)
     if userID and destination:
-        # cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
-        #     (userID, localeID))
+        cur.execute("UPDATE Users (localeID) SET localeID = (?) WHERE userID = (?)", 
+             (destination, userID)) # does this work? find out
         added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?, ?, ?, ?)", (walkName, origin, destination, userID,))
     db.commit()
     db.close()
