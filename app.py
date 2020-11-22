@@ -164,7 +164,8 @@ def completeLogin(localeName=None):
     cur = db.cursor()
     firstName = request.args.get('firstName')
     lastName = request.args.get('lastName')
-    localeName = request.args.get('localeName')  
+    localeName = request.args.get('localeName')
+    localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
     # TO DO: check that user exists
     # flash('Login unsuccessful! Please try again.', 'danger')
     if localeName:
