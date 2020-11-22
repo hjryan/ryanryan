@@ -42,6 +42,9 @@ activityName VARCHAR(40) NOT NULL
 );
 INSERT INTO Activities(activityName) VALUES("Call Arvind I guess");
 INSERT INTO Activities(activityName) VALUES("Enjoy operating the flip");
+INSERT INTO Activities(activityName) VALUES("baking sourdough");
+INSERT INTO Activities(activityName) VALUES("watching Ally McBeal");
+INSERT INTO Activities(activityName) VALUES("coughing into the abyss");
 CREATE TABLE ActivitiesUsers(
 activityID INTEGER,
 userID INTEGER,
