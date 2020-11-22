@@ -114,20 +114,21 @@ def locales():
 def completeRegistration(localeName=None):
     db = get_db()
     cur = db.cursor()
-    localeName = request.args.get('localeName')   
+    firstName = request.args.get('firstName')
+    lastName = request.args.get('lastName')
+    localeName = request.args.get('localeName')  
     if localeName:
-        added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
+        localeAdded = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
         localeID = cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchall()
-        # added = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
+        userAdded = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
+        user.userID = cur.execute("SELECT userID from Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchall()
     db.commit()
     db.close()
-    return redirect('/locales')
+    return redirect('/index')
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
-    # form = RegistrationForm()
-    # if form.validate_on_submit():
-    #     flash(f"{form.firstName.data}'s account created!", 'success')
+    flash(f"{form.firstName.data}'s account created!", 'success')
     #     return redirect(url_for('index'))
     return render_template('register.html', title='Register')
 
