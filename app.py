@@ -1,5 +1,4 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm
 from db_con import get_db
 import sqlite3
 
@@ -8,10 +7,10 @@ app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
 # experience should be based on who y'are
 user = {
-    'userID' : 0, #int, autoincrement, not NULL, PK
-    'firstName': "First Name", #varchar, not NULL
-    'lastName': "Last Name", #varchar, not NULL
-    'localeName' : "Locale Name" #this should be from a diff table lol
+    'userID' : 0,
+    'firstName': "First Name",
+    'lastName': "Last Name",
+    'localeName' : "Locale Name"
 }
 
 @app.route('/')
@@ -159,16 +158,29 @@ def completeRegistration(localeName=None):
 def register(localeName=None):
     return render_template('register.html', title='Register')
 
+@app.route('/complete-login', methods=['GET'])
+def completeLogin(localeName=None):
+    db = get_db()
+    cur = db.cursor()
+    firstName = request.args.get('firstName')
+    lastName = request.args.get('lastName')
+    localeName = request.args.get('localeName')  
+    # TO DO: check that user exists
+    # flash('Login unsuccessful! Please try again.', 'danger')
+    if localeName:
+        # update this lil dictionary which is used in the user's home page
+        user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
+        user['firstName'] = firstName
+        user['lastName'] = lastName
+        user['localeName'] = localeName
+        flash(f"{firstName} is logged in!", 'success')
+    db.commit()
+    db.close()
+    return redirect('/')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.firstName.data == 'hotdog' and form.password.data == 'password':
-            flash(f'Welcome {form.firstName.data}!', 'success')
-            return redirect(url_for('index'))
-        else:
-            flash('Login unsuccessful! Please try again.', 'danger')
-    return render_template('login.html', title='Log In', form=form)
+    return render_template('login.html', title='Log In')
 
 @app.route('/reset-db')
 def reset_db():

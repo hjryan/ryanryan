@@ -1,61 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend>Welcome back!</legend>
-            <div class="form-group">
-                {{ form.firstName.label(class="form-control-label") }}
-
-                {% if form.firstName.errors %}
-                {{ form.firstName(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.firstName.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.firstName(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.lastName.label(class="form-control-label") }}
-
-                {% if form.lastName.errors %}
-                {{ form.lastName(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.lastName.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.lastName(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.password.label(class="form-control-label") }}
-                {% if form.password.errors %}
-                {{ form.password(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.password.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.password(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-check">
-                {{ form.remember(class="form-check-input") }}
-                {{ form.remember.label(class="form-check-label") }}
-            </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
-        </div>
+<legend>Log In</legend>
+<table>
+    <form id="addNew" action="/complete-login">
+        <tr>
+            <td><input type="text" name="firstName" placeholder="first name" required></td>
+            <td><input type="text" name="lastName" placeholder="last name" required></td>
+            <td><input type="text" name="localeName" placeholder="locale name" required></td>
+            <td><input type="submit" value="log in!" id="addNewButton" required></td>
+        </tr>
     </form>
-</div>
+</table>
 <div>
     <small>
         Don't have an account? <a class="ml-2" href="{{ url_for('register') }}">Create one</a>
