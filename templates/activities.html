@@ -56,7 +56,7 @@
     <p></p>
     <h2>Book an activity!</h2>
     <p>This adds an entry to ActivitiesUsers</p>
-    <form id="addNew">
+    <form id="addNew" action='/add-activity-user'>
         <select name="activityName" id="activityName">
             {% for act in data %}
                 <option value="{{act['activityID']}}">{{ act['activityName'] }}</option>

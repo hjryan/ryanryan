@@ -41,6 +41,19 @@ def addActLoc():
     db.close()
     return redirect('/activities')
 
+@app.route('/add-activity-user', methods=['GET'])
+def addActivityUser():
+    db = get_db()
+    cur = db.cursor()
+    actID = request.args.get('activityName')
+    userID = user['userID']
+    if actID and userID:
+        cur.execute("INSERT INTO ActivitiesUsers (activityID, userID) VALUES (?, ?)", 
+            (actID, userID))
+    db.commit()
+    db.close()
+    return redirect('/activities')  
+
 @app.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
     db = get_db()
