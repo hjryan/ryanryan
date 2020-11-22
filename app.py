@@ -93,7 +93,9 @@ def addWalk(walkName=None):
     walkName = request.args.get('walkName')
     destination = request.args.get('destination')
     if userID and destination:
-        cur.execute("UPDATE Users SET localeID = (?) WHERE userID = (?)", (destination, userID,)) # does this work? find out
+        cur.execute("UPDATE Users SET localeID = (?) WHERE userID = (?)", (destination, userID,))
+        localeName = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [destination]).fetchone())[0]
+        user['localeName'] = localeName
         added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?, ?, ?, ?)", (walkName, origin, destination, userID,))
     db.commit()
     db.close()
