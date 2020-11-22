@@ -15,11 +15,13 @@ user = {
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='User Page', user=user)
+    if user['userID'] == 0:
+        return redirect('/register')
+    return render_template(url_for('index'), title='User Page', user=user)
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template(url_for('home'))
 
 @app.route('/add-activity-locale', methods=['GET'])
 def addActLoc():
@@ -32,7 +34,7 @@ def addActLoc():
             (actID, localeID))
     db.commit()
     db.close()
-    return redirect('/activities')
+    return redirect(url_for('activities'))
 
 @app.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
@@ -43,7 +45,7 @@ def addActivity(activityName=None):
         added = cur.execute("INSERT INTO Activities (activityName) VALUES (?)", (activityName,))
     db.commit()
     db.close()
-    return redirect('/activities')
+    return redirect(url_for('activities'))
 
 @app.route('/activities')
 def activities():
@@ -56,7 +58,7 @@ def activities():
     actUsers = cur.execute("SELECT * FROM ActivitiesUsers").fetchall()
     db.commit()
     db.close()
-    return render_template('activities.html', title='Activities', 
+    return render_template(url_for('activities'), title='Activities', 
         data=data, 
         actloc=actLocals, 
         locs=locs, 
@@ -76,7 +78,7 @@ def addWalk(walkName=None):
         added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?, ?, ?, ?)", (walkName, origin, destination, userID,))
     db.commit()
     db.close()
-    return redirect('/walks')
+    return redirect(url_for('walks'))
 
 @app.route('/walks')
 def walks():
@@ -87,7 +89,7 @@ def walks():
     locales = cur.execute("SELECT * FROM Locales LEFT JOIN Users ON Locales.localeID = Users.LocaleID WHERE Users.LocaleID IS NULL").fetchall() # only locales no one is at
     db.commit()
     db.close()
-    return render_template('walks.html', title='Walks', locales=locales, data=data)
+    return render_template(url_for('walks'), title='Walks', locales=locales, data=data)
 
 @app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
@@ -98,7 +100,7 @@ def addLocale(localeName=None):
         added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
     db.commit()
     db.close()
-    return redirect('/locales')
+    return redirect(url_for('locales'))
 
 @app.route('/locales')
 def locales():
@@ -108,7 +110,7 @@ def locales():
     data = cur.execute("""SELECT Locales.localeID, Locales.localeName, Users.userID FROM Locales LEFT JOIN Users ON Users.localeID = Locales.localeID""").fetchall()
     db.commit()
     db.close()
-    return render_template('locales.html', title='Locales', data=data)
+    return render_template(url_for('locales'), title='Locales', data=data)
 
 @app.route('/complete-registration', methods=['GET'])
 def completeRegistration(localeName=None):
@@ -130,7 +132,7 @@ def completeRegistration(localeName=None):
         flash(f"{firstName}'s account created!", 'success')
     db.commit()
     db.close()
-    return redirect('/')
+    return redirect(url_for('index'))
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
@@ -145,7 +147,7 @@ def login():
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful! Please try again.', 'danger')
-    return render_template('login.html', title='Log In', form=form)
+    return render_template(url_for('login'), title='Log In', form=form)
 
 @app.route('/reset-db')
 def reset_db():
