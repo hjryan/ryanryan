@@ -74,7 +74,7 @@ def addWalk(walkName=None):
     if userID and destination:
         # cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
         #     (userID, localeID))
-        added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?)", (walkName, origin, destination, userID,))
+        added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?, ?, ?, ?)", (walkName, origin, destination, userID,))
     db.commit()
     db.close()
     return redirect('/walks')
