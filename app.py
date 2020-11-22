@@ -118,12 +118,14 @@ def register(localeName=None):
     firstName = {form.firstName.data}
     lastName = {form.lastName.data}
     localeName = {form.localeName.data}
+    print(firstName, lastName, localeName)
     # additional validations needed --
     # use locales data to check if locale already exists
     # if so, is someone there? don't let them register there
 
     # otherwise, add locale
-    added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
+    if localeName:
+        added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
     db.commit()
     db.close()
     
