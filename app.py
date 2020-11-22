@@ -88,7 +88,8 @@ def addWalk(walkName=None):
     db = get_db()
     cur = db.cursor()
     userID = user['userID']
-    origin = user['localeID']
+    originLocaleName = user['localeName']
+    origin = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [originLocaleName]).fetchone())[0]
     walkName = request.args.get('walkName')
     destination = request.args.get('destination')
     if userID and destination:
