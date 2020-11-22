@@ -118,7 +118,8 @@ def register():
     firstName = {form.firstName.data}
     lastName = {form.lastName.data}
     localeName = {form.localeName.data}
-    localeID = cur.execute("""SELECT localeID FROM Locales WHERE localeName = (?)""", (localeName,)).fetchall()
+    localeID = cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", (localeName,)).fetchall()
+    db.commit()
     # additional validations needed --
     # use locales data to check if locale already exists
     # if so, is someone there? don't let them register there
@@ -129,7 +130,6 @@ def register():
             added = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
             db.commit()
     
-
     if form.validate_on_submit():
         flash(f"{form.firstName.data}'s account created!", 'success')
         added = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
