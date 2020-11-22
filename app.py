@@ -125,10 +125,10 @@ def completeRegistration(localeName=None):
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        flash(f"{form.firstName.data}'s account created!", 'success')
-        return redirect(url_for('index'))
+    # form = RegistrationForm()
+    # if form.validate_on_submit():
+    #     flash(f"{form.firstName.data}'s account created!", 'success')
+    #     return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])

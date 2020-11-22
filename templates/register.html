@@ -1,6 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
+ <legend>Join Quarpedia</legend>
+<table>
+    <form id="addNew" action="/complete-registration">
+        <tr>
+            <th>first name</th>
+            <th>last name</th>
+            <th>locale name</th>
+        </tr>
+        <tr>
+            <td><input type="text" name="firstName" placeholder="first name" required></td>
+            <td><input type="text" name="lastName" placeholder="last name" required></td>
+            <td><input type="text" name="localeName" placeholder="locale name" required></td>
+            <td><input type="submit" value="register!" id="addNewButton" required></td>
+        </tr>
+    </form>
+</table>
+<!-- <div class="content-section">
     <form method="POST" action="/complete-registration">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
@@ -78,7 +94,7 @@
             {{ form.submit(class="btn btn-outline-info") }}
         </div>
     </form>
-</div>
+</div> -->
 <small>
     Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Log in</a>
 </small>
