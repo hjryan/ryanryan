@@ -12,11 +12,13 @@
     <tr>
         <th>localeID</th>
         <th>localeName</th> 
+        <th>userID</th>
     </tr>
     {% for locale in data %}
         <tr>
             <td>{{locale['localeID']}}</td>
             <td>{{locale['localeName']}}</td>
+            <td>{{locale['userID']}}</td>
             <td><input type="submit" value="update" id="updateButton" required></td>
             <td><input type="submit" value="delete" id="deleteButton" required></td>
         </tr>

@@ -105,7 +105,7 @@ def locales():
     db = get_db()
     db.row_factory = sqlite3.Row
     cur = db.cursor()
-    data = cur.execute("""SELECT * FROM Locales""").fetchall()
+    data = cur.execute("""SELECT Locales.localeID, Locales.localeName, Users.userID FROM Locales LEFT JOIN Users ON Users.localeID = Locales.localeID""").fetchall()
     db.commit()
     db.close()
     return render_template('locales.html', title='Locales', data=data)
