@@ -5,21 +5,18 @@
 <p>Walks are a bit more permanent now. Please name your walk, and select your destination.</p>
 <form id="addNew">
     <input type="text" name="walkName" placeholder="walk name" required>
-    <select name="localeName" id="localeName">
-      <option value="kitchen">the kitchen</option>
-      <option value="laundry">the laundry room</option>
-      <option value="saturn">Saturn</option>
-      <option value="volunteerpark">Volunteer Park</option>
-      <option value="calandersonpark">Cal Anderson Park</option>
-      <option value="interlakenpark">Interlaken Park</option>
-      <option value="thearboretum">The Arboretum</option>
-  </select>
+    <select name="destination" id="destination">
+            {% for destination in locales %}
+                <option value="{{destination['localeID']}}">{{destination['localeName']}}</option>
+            {% endfor %}
+        </select>
   <input type="submit" value="i'm going on this walk right now!" id="addNewButton" required>
 </form>
 <br>
 <small>
     Is the walk you're going on not here? <a class="ml-2" href="{{ url_for('locales') }}">Add a destination</a>
 </small>
+<br><br>
 <h2>Edit existing Walks:</h2>
 <table>
   <tr>

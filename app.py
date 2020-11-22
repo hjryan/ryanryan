@@ -27,11 +27,9 @@ def addActLoc():
     cur = db.cursor()
     actID = request.args.get('activityName')
     localeID = request.args.get('localeName')
-
     if actID and localeID:
         cur.execute("INSERT INTO ActivitiesLocales (activityID, localeID) VALUES (?, ?)", 
             (actID, localeID))
-
     db.commit()
     db.close()
     return redirect('/activities')
@@ -41,10 +39,8 @@ def addActivity(activityName=None):
     db = get_db()
     cur = db.cursor()
     activityName = request.args.get('activityName')
-    
     if activityName:
         added = cur.execute("INSERT INTO Activities (activityName) VALUES (?)", (activityName,))
-
     db.commit()
     db.close()
     return redirect('/activities')
@@ -66,15 +62,29 @@ def activities():
         locs=locs, 
         actUsers=actUsers)
 
+# @app.route('/add-walk', methods=['GET'])
+# def addActLoc():
+#     db = get_db()
+#     cur = db.cursor()
+#     userID = 1
+#     localeID = request.args.get('localeName')
+#     if actID and localeID:
+#         cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
+#             (userID, localeID))
+#     db.commit()
+#     db.close()
+#     return redirect('/walks')
+
 @app.route('/walks')
 def walks():
     db = get_db()
     db.row_factory = sqlite3.Row
     cur = db.cursor()
     data = cur.execute("""SELECT * FROM Walks""").fetchall()
+    locales = cur.execute("SELECT * FROM Locales").fetchall()
     db.commit()
     db.close()
-    return render_template('walks.html', title='Walks', data=data)
+    return render_template('walks.html', title='Walks', locales=locales, data=data)
 
 @app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
