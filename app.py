@@ -21,7 +21,7 @@ def index():
     db = get_db()
     cur = db.cursor()
     userID = user['userID']
-    activities = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesUsers LEFT JOIN Activities ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesUsers.UserID = (?) """, [userID]).fetchall()
+    activities = cur.execute("""SELECT Activities.activityName FROM ActivitiesUsers LEFT JOIN Activities ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesUsers.UserID = (?) """, [userID]).fetchall()
     print(activities)
     return render_template('index.html', title='User Page', user=user, activities=activities)
 
@@ -88,9 +88,7 @@ def addWalk(walkName=None):
     db = get_db()
     cur = db.cursor()
     userID = user['userID']
-    print('USERS LOCALE')
-    print(user['localeName'])
-    originLocaleName = user['localeName']
+    originLocaleName = user['localeName'] # BROKEN: this is "Locale Name" -- it should be the user's locale name (after register/login)
     origin = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [originLocaleName]).fetchone())[0]
     walkName = request.args.get('walkName')
     destination = request.args.get('destination')
