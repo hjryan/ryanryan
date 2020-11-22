@@ -125,7 +125,7 @@ def completeRegistration(localeName=None):
         #user.userID = cur.execute("SELECT userID from Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchall()
     db.commit()
     db.close()
-    flash(f"{firstName}'s account created!", 'success')
+    #flash(f"{firstName}'s account created!", 'success')
     return redirect('/index')
 
 @app.route('/register', methods=['GET'])
