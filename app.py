@@ -129,7 +129,7 @@ def register(localeName=None):
     # if form.validate_on_submit():
     #     flash(f"{form.firstName.data}'s account created!", 'success')
     #     return redirect(url_for('index'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title='Register')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
