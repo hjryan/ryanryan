@@ -6,6 +6,7 @@ import sqlite3
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
+# experience should be based on who y'are
 user = {
     'userID' : 0, #int, autoincrement, not NULL, PK
     'firstName': "First Name", #varchar, not NULL
@@ -124,7 +125,7 @@ def completeRegistration(localeName=None):
         localeAdded = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
         localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
         userAdded = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
-        # update this lil dictionary which is used in the user's home page (this is broken)
+        # update this lil dictionary which is used in the user's home page
         user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
         user['firstName'] = firstName
         user['lastName'] = lastName
@@ -132,11 +133,11 @@ def completeRegistration(localeName=None):
         flash(f"{firstName}'s account created!", 'success')
     db.commit()
     db.close()
-    return redirect(url_for('index'))
+    return redirect('/')
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
-    return render_template(url_for('register'), title='Register')
+    return render_template('/register', title='Register')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -147,7 +148,7 @@ def login():
             return redirect(url_for('index'))
         else:
             flash('Login unsuccessful! Please try again.', 'danger')
-    return render_template(url_for('login'), title='Log In', form=form)
+    return render_template('/login', title='Log In', form=form)
 
 @app.route('/reset-db')
 def reset_db():
