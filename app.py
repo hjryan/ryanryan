@@ -63,7 +63,7 @@ def activities():
         actUsers=actUsers)
 
 @app.route('/add-walk', methods=['GET'])
-def addActLoc():
+def addWalk():
     db = get_db()
     cur = db.cursor()
     userID = 1
