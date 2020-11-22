@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div>
-    <h3>Hi {{ user.firstName }}, welcome to your source for Thrilling Quarantine Activities</h3>
+    <h4>Hi {{ user.firstName }}, welcome to your source for Thrilling Quarantine Activities</h4>
     <h3>Current Locale: {{ user.localeName }}</h3>
     <p><small>
         Are you tired of being here here? (VIBE) To change your locale,<a class="ml-2" href="{{ url_for('walks') }}"> please select a walk at the walks page.</a>
@@ -13,6 +13,13 @@
         <li>watching Ally McBeal</li>
         <li>coughing into the abyss</li>
     </ul>
+
+    <ul>
+    {% for activity in activities %}
+    <li>{{activity['activityName']}}</li>
+    </ul>
+    {% endfor %}
+    
     <p><small>
         Is it time for something else? To add new activities,<a class="ml-2" href="{{ url_for('activities') }}"> please use the add function on the activities page.</a>
     </small>
