@@ -22,7 +22,7 @@ def index():
     cur = db.cursor()
     userID = user['userID']
     activities = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesUsers LEFT JOIN Activities ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesUsers.UserID = (?) """, [userID]).fetchall()
-    return render_template('index.html', title='User Page', user=user)
+    return render_template('index.html', title='User Page', user=user, activities=activities)
 
 @app.route('/home')
 def home():
