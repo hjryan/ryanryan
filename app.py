@@ -71,8 +71,8 @@ def addWalk(walkName=None):
     walkName = request.args.get('walkName')
     destination = request.args.get('destination')
     if userID and destination:
-        cur.execute("UPDATE Users (localeID) SET localeID = (?) WHERE userID = (?)", 
-             (destination, userID)) # does this work? find out
+        # cur.execute("UPDATE Users (localeID) SET localeID = (?) WHERE userID = (?)", 
+        #      (destination, userID)) # does this work? find out
         added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?, ?, ?, ?)", (walkName, origin, destination, userID,))
     db.commit()
     db.close()
@@ -84,7 +84,7 @@ def walks():
     db.row_factory = sqlite3.Row
     cur = db.cursor()
     data = cur.execute("""SELECT * FROM Walks""").fetchall()
-    locales = cur.execute("SELECT * FROM Locales").fetchall()
+    locales = cur.execute("SELECT * FROM Locales WHERE (SELECT Locales.localeName FROM Locales LEFT JOIN Users ON Locales.localeID = Users.LocaleID WHERE Users.LocaleID IS NULL").fetchall() # only locales no one is at
     db.commit()
     db.close()
     return render_template('walks.html', title='Walks', locales=locales, data=data)
