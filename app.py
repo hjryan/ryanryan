@@ -118,7 +118,7 @@ def register():
     firstName = {form.firstName.data}
     lastName = {form.lastName.data}
     localeName = {form.localeName.data}
-    localeID = cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", ([localeName],)).fetchall()
+    localeID = cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchall()
     db.commit()
     # additional validations needed --
     # use locales data to check if locale already exists
