@@ -4,23 +4,23 @@
 <p>This updates the currently logged in user's localeID in the Users table, and adds an entry to the Walks table</p>
 <p>Walks are a bit more permanent now. Please name your walk, and select your destination.</p>
 <table>
-<form id="addNew" action="/add-walk">
-    <tr>
-    <th>walk name</th>
-    <th>destination</th>
-</tr>
-<tr>
-    <td><input type="text" name="walkName" placeholder="walk name" required></td>
-    <td>
-    <select name="destination" id="destination">
-        {% for destination in locales %}
-            <option value="{{destination['localeID']}}">{{destination['localeName']}}</option>
-        {% endfor %}
-    </select>
-    </td>
-  <td><input type="submit" value="i'm going on this walk right now!" id="addNewButton" required></td>
-</tr>
-</form>
+    <form id="addNew" action="/add-walk">
+        <tr>
+            <th>walk name</th>
+            <th>destination</th>
+        </tr>
+        <tr>
+            <td><input type="text" name="walkName" placeholder="walk name" required></td>
+            <td>
+                <select name="destination" id="destination">
+                    {% for destination in locales %}
+                    <option value="{{destination['localeID']}}">{{destination['localeName']}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td><input type="submit" value="i'm going on this walk right now!" id="addNewButton" required></td>
+        </tr>
+    </form>
 </table>
 <br>
 <small>
