@@ -15,8 +15,8 @@ user = {
 
 @app.route('/')
 def index():
-    if user['userID'] == 0:
-        return redirect('/register')
+    # if user['userID'] == 0:
+    #     return redirect('/register')
     return render_template(url_for('index'), title='User Page', user=user)
 
 @app.route('/home')
