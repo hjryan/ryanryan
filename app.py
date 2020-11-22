@@ -118,14 +118,18 @@ def completeRegistration(localeName=None):
     lastName = request.args.get('lastName')
     localeName = request.args.get('localeName')  
     if localeName:
+        # create actual data
         localeAdded = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
         localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
         userAdded = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
-        user['userID'] = (cur.execute("SELECT userID from Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
-
+        # update this lil dictionary which is used in the user's home page (this is broken)
+        user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
+        user['firstName'] = firstName
+        user['lastName'] = lastName
+        user['localeName'] = localeID
+        flash(f"{firstName}'s account created!", 'success')
     db.commit()
     db.close()
-    #flash(f"{firstName}'s account created!", 'success')
     return redirect('/')
 
 @app.route('/register', methods=['GET'])
