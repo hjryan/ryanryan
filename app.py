@@ -111,7 +111,7 @@ def locales():
     return render_template('locales.html', title='Locales', data=data)
 
 @app.route('/register', methods=['GET', 'POST'])
-def register():
+def register(localeName=None):
     form = RegistrationForm()
     db = get_db()
     cur = db.cursor()
