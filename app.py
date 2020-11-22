@@ -133,26 +133,48 @@ def locales():
     return render_template('locales.html', title='Locales', data=data)
 
 @app.route('/complete-registration', methods=['GET'])
-def completeRegistration(localeName=None):
+def completeRegistration(firstName=None, lastName=None, localeName=None):
     db = get_db()
     cur = db.cursor()
+
+    # save values provided by user
     firstName = request.args.get('firstName')
     lastName = request.args.get('lastName')
-    localeName = request.args.get('localeName')  
-    if localeName:
-        # create actual data
-        localeAdded = cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
-        localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
-        userAdded = cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
-        # update this lil dictionary which is used in the user's home page
-        user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
-        user['firstName'] = firstName
-        user['lastName'] = lastName
-        user['localeName'] = localeName
-        flash(f"{firstName}'s account created!", 'success')
+    localeName = request.args.get('localeName') 
+
+    if firstName and lastName and localeName:
+        # check that locale doesn't already exist, in which case skip create
+        localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())
+        if localeID is None:
+            # create user's locale
+            cur.execute("INSERT INTO Locales (localeName) VALUES (?)", (localeName,))
+            localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
+        else:
+            # if localeID exists, skip create
+            localeID = localeID[0]
+        
+        # check that no one is currently at provided locale
+        userID = (cur.execute("SELECT userID FROM Users WHERE localeID = (?)", [localeID]).fetchone())
+        if userID is None:
+            # add user
+            cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
+            # update this lil dictionary which is used in the user's home page
+            user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
+            user['firstName'] = firstName
+            user['lastName'] = lastName
+            user['localeName'] = localeName
+            flash(f"{firstName}'s account created!", 'success')
+            db.commit()
+            db.close()
+            return redirect('/')
+        else:
+            flash('Registragion unsuccessful! Locale is not available. Please try again.', 'danger')
     db.commit()
     db.close()
-    return redirect('/')
+    return redirect('/register')
+        
+        
+    
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
@@ -162,25 +184,42 @@ def register(localeName=None):
 def completeLogin(localeName=None):
     db = get_db()
     cur = db.cursor()
+
+    # save values provided by user
     firstName = request.args.get('firstName')
     lastName = request.args.get('lastName')
     localeName = request.args.get('localeName')
-    localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
-    userID = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
-    # TO DO: check that user exists
-    if firstName == (cur.execute("SELECT firstName FROM Users WHERE userID = (?)", [userID]).fetchall())[0]:
-        flash('Login unsuccessful! Please try again.', 'danger')
+    
+    # find localeID for associated localeName, show error if doesn't exist
+    localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())#[0]
+    if localeID is None:
+        flash('Login unsuccessful! Locale does not exist. Please try again.', 'danger')
+        return redirect('/login')
+    localeID = localeID[0]
+    
+    # find userID for associated firstName, lastName, and localeID, show error if doesn't exist
+    userID = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())
+    if userID is None:
+        flash('Login unsuccessful! A user with these characteristics does not exist. Please try again.', 'danger')
+        return redirect('/login')
+    userID = userID[0]
 
-    else:
+    # if values provided by user match those for userID found, log in
+    if firstName == (cur.execute("SELECT firstName FROM Users WHERE userID = (?)", [userID]).fetchall())[0][0] and lastName == (cur.execute("SELECT lastName FROM Users WHERE userID = (?)", [userID]).fetchall())[0][0] and localeID == (cur.execute("SELECT localeID FROM Users WHERE userID = (?)", [userID]).fetchall())[0][0]:
         # update this lil dictionary which is used in the user's home page
         user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
         user['firstName'] = firstName
         user['lastName'] = lastName
         user['localeName'] = localeName
         flash(f"{firstName} is logged in!", 'success')
-    db.commit()
-    db.close()
-    return redirect('/')
+        db.commit()
+        db.close()
+        return redirect('/')
+
+    # other scenario I haven't thought of (maybe delete, maybe exists)
+    else:
+        flash('Login unsuccessful! Please try again.', 'danger')
+    return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
