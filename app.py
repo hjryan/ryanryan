@@ -123,7 +123,7 @@ def register():
     # use locales data to check if locale already exists
     # if so, is someone there? don't let them register there
     # otherwise, add locale
-    redirect('/add-locale', localeName=localeName)
+    redirect('/add-locale')
     if form.validate_on_submit():
         flash(f"{form.firstName.data}'s account created!", 'success')
         
