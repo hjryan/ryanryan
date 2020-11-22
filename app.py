@@ -136,7 +136,7 @@ def completeRegistration(localeName=None):
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
-    return render_template('register.html', title='Register')
+    return render_template(url_for('register'), title='Register')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
