@@ -67,11 +67,12 @@ def addActLoc():
     db = get_db()
     cur = db.cursor()
     userID = 1
+    origin = 1
     localeID = request.args.get('localeName')
     if userID and localeID:
-        cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
-            (userID, localeID))
-        added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?)", (walkName, "1", localdID, "1",))
+        # cur.execute("UPDATE Users (localeID) VALUES (?, ?)", 
+        #     (userID, localeID))
+        added = cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?)", (walkName, origin, localeID, userID,))
     db.commit()
     db.close()
     return redirect('/walks')
