@@ -82,6 +82,7 @@ def addActivity(activityName=None):
 def activities():
     if user['userID'] == 0:
         return redirect('/login')
+
     else:
         db = get_db()
         db.row_factory = sqlite3.Row
@@ -297,6 +298,13 @@ def reset_db():
             db.cursor().executescript(file.read())
         db.commit()
     print("Database Reset")
+
+    # reset global user data
+    user['userID'] = 0
+    user['firstName'] = "First Name"
+    user['lastName'] = "Last Name"
+    user['localeName'] = "Locale Name"
+
     return redirect('/login')
 
 
