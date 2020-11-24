@@ -15,6 +15,7 @@ user = {
 
 @app.route('/')
 def index():
+    time.sleep(2)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -27,11 +28,13 @@ def index():
 
 @app.route('/home')
 def home():
+    time.sleep(2)
     print(user)
     return render_template('home.html')
 
 @app.route('/add-activity-locale', methods=['GET'])
 def addActLoc():
+    time.sleep(2)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -48,6 +51,7 @@ def addActLoc():
 
 @app.route('/add-activity-user', methods=['GET'])
 def addActivityUser():
+    time.sleep(2)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -73,6 +77,7 @@ def addActivityUser():
 
 @app.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
+    time.sleep(2)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -85,6 +90,7 @@ def addActivity(activityName=None):
 
 @app.route('/activities')
 def activities():
+    time.sleep(2)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -124,6 +130,7 @@ def activities():
 
 @app.route('/add-walk', methods=['GET'])
 def addWalk(walkName=None):
+    time.sleep(2)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -159,6 +166,7 @@ def addWalk(walkName=None):
 
 @app.route('/walks')
 def walks():
+    time.sleep(2)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -179,6 +187,7 @@ def walks():
 
 @app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
+    time.sleep(2)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -195,6 +204,7 @@ def addLocale(localeName=None):
 
 @app.route('/locales')
 def locales():
+    time.sleep(2)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -212,6 +222,7 @@ def locales():
 
 @app.route('/complete-registration', methods=['GET'])
 def completeRegistration(firstName=None, lastName=None, localeName=None):
+    time.sleep(2)
     print(user)
     # reset global user data
     user['userID'] = 0
@@ -260,11 +271,13 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
+    time.sleep(2)
     print(user)
     return render_template('register.html', title='Register')
 
 @app.route('/complete-login', methods=['GET'])
 def completeLogin(localeName=None):
+    time.sleep(2)
     print(user)
     # reset global user data
     user['userID'] = 0
@@ -313,11 +326,13 @@ def completeLogin(localeName=None):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    time.sleep(2)
     print(user)
     return render_template('login.html', title='Log In')
 
 @app.route('/reset-db')
 def reset_db():
+    time.sleep(2)
     print(user)
     with app.app_context():
         db = get_db()
@@ -336,6 +351,7 @@ def reset_db():
 
 @app.route('/logout')
 def logout():
+    time.sleep(2)
     print(user)
 
     # reset global user data
