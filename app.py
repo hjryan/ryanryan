@@ -202,6 +202,12 @@ def locales():
 
 @app.route('/complete-registration', methods=['GET'])
 def completeRegistration(firstName=None, lastName=None, localeName=None):
+    # reset global user data
+    user['userID'] = 0
+    user['firstName'] = "First Name"
+    user['lastName'] = "Last Name"
+    user['localeName'] = "Locale Name"
+
     db = get_db()
     cur = db.cursor()
 
@@ -247,6 +253,12 @@ def register(localeName=None):
 
 @app.route('/complete-login', methods=['GET'])
 def completeLogin(localeName=None):
+    # reset global user data
+    user['userID'] = 0
+    user['firstName'] = "First Name"
+    user['lastName'] = "Last Name"
+    user['localeName'] = "Locale Name"
+    
     db = get_db()
     cur = db.cursor()
 
