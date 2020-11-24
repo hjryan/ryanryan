@@ -363,6 +363,13 @@ def logout():
 
     return redirect('/login')
 
+# Auto-closes db connection at the end of each request
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
