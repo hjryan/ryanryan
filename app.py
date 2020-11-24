@@ -307,6 +307,17 @@ def reset_db():
 
     return redirect('/login')
 
+@app.route('/logout')
+def logout():
+
+    # reset global user data
+    user['userID'] = 0
+    user['firstName'] = "First Name"
+    user['lastName'] = "Last Name"
+    user['localeName'] = "Locale Name"
+
+    return redirect('/login')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
