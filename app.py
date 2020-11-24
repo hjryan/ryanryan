@@ -15,6 +15,7 @@ user = {
 
 @app.route('/')
 def index():
+    print(user)
     if user['userID'] == 0:
         return redirect('/login')
     else:
@@ -26,10 +27,12 @@ def index():
 
 @app.route('/home')
 def home():
+    print(user)
     return render_template('home.html')
 
 @app.route('/add-activity-locale', methods=['GET'])
 def addActLoc():
+    print(user)
     db = get_db()
     cur = db.cursor()
 
@@ -45,6 +48,7 @@ def addActLoc():
 
 @app.route('/add-activity-user', methods=['GET'])
 def addActivityUser():
+    print(user)
     db = get_db()
     cur = db.cursor()
 
@@ -69,6 +73,7 @@ def addActivityUser():
 
 @app.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
+    print(user)
     db = get_db()
     cur = db.cursor()
     activityName = request.args.get('activityName')
@@ -80,6 +85,7 @@ def addActivity(activityName=None):
 
 @app.route('/activities')
 def activities():
+    print(user)
     if user['userID'] == 0:
         return redirect('/login')
 
@@ -118,6 +124,7 @@ def activities():
 
 @app.route('/add-walk', methods=['GET'])
 def addWalk(walkName=None):
+    print(user)
     db = get_db()
     cur = db.cursor()
 
@@ -152,6 +159,7 @@ def addWalk(walkName=None):
 
 @app.route('/walks')
 def walks():
+    print(user)
     if user['userID'] == 0:
         return redirect('/login')
 
@@ -171,6 +179,7 @@ def walks():
 
 @app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
+    print(user)
     db = get_db()
     cur = db.cursor()
 
@@ -186,6 +195,7 @@ def addLocale(localeName=None):
 
 @app.route('/locales')
 def locales():
+    print(user)
     if user['userID'] == 0:
         return redirect('/login')
 
@@ -202,6 +212,7 @@ def locales():
 
 @app.route('/complete-registration', methods=['GET'])
 def completeRegistration(firstName=None, lastName=None, localeName=None):
+    print(user)
     # reset global user data
     user['userID'] = 0
     user['firstName'] = "First Name"
@@ -249,16 +260,18 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
+    print(user)
     return render_template('register.html', title='Register')
 
 @app.route('/complete-login', methods=['GET'])
 def completeLogin(localeName=None):
+    print(user)
     # reset global user data
     user['userID'] = 0
     user['firstName'] = "First Name"
     user['lastName'] = "Last Name"
     user['localeName'] = "Locale Name"
-    
+
     db = get_db()
     cur = db.cursor()
 
@@ -300,10 +313,12 @@ def completeLogin(localeName=None):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    print(user)
     return render_template('login.html', title='Log In')
 
 @app.route('/reset-db')
 def reset_db():
+    print(user)
     with app.app_context():
         db = get_db()
         with app.open_resource('setup-queries.sql', mode='r') as file:
@@ -321,6 +336,7 @@ def reset_db():
 
 @app.route('/logout')
 def logout():
+    print(user)
 
     # reset global user data
     user['userID'] = 0
