@@ -9,21 +9,22 @@ app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
 @app.route('/')
 def index():
-    
-    # troubleshooting -- what happens can we check for to see if the db is down?
-    print("DB DOWN?", get_db())
+    # open connection
+    db = get_db()
+    cur = db.cursor()
 
     # if the database is down, reset it
-    if get_db() is None:
+    if not cur.execute("""SELECT EXISTS(
+       SELECT * 
+       FROM information_schema.tables 
+       WHERE table_schema = 'db' 
+       AND table_name = 'Users');"""):
         return redirect('/reset-db')
 
     # if there is no current session, send user to login
     if session == {}:
         return redirect('/login')
     else:
-        # open connection
-        db = get_db()
-        cur = db.cursor()
         
         # get list of user's activities by name for display
         activities = cur.execute("""
@@ -565,7 +566,7 @@ def reset_db():
 
     # close connection
     db.close()
-    
+
     return redirect('/login')
 
 
