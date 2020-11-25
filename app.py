@@ -14,7 +14,7 @@ def index():
     cur = db.cursor()
 
     # if the database is down, reset it
-    if not cur.execute("""
+    if cur.execute("""
         SELECT name 
         FROM sqlite_master 
         WHERE type='table' 
