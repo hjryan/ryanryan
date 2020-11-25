@@ -1,6 +1,5 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from db_con import get_db
-import time
 import sqlite3
 
 app = Flask(__name__)
@@ -18,7 +17,6 @@ user = {
 def index():
     if get_db() is None:
         return redirect('/reset-db')
-    time.sleep(1)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -27,17 +25,18 @@ def index():
         cur = db.cursor()
         
         activities = cur.execute("""SELECT Activities.activityName FROM ActivitiesUsers LEFT JOIN Activities ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesUsers.UserID = (?) """, [user['userID']]).fetchall()
+        
+        db.commit()
+        db.close()
         return render_template('index.html', title='User Page', user=user, activities=activities)
 
 @app.route('/home')
 def home():
-    time.sleep(1)
     print(user)
     return render_template('home.html')
 
 @app.route('/add-activity-locale', methods=['GET'])
 def addActLoc():
-    time.sleep(1)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -54,7 +53,6 @@ def addActLoc():
 
 @app.route('/add-activity-user', methods=['GET'])
 def addActivityUser():
-    time.sleep(1)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -80,7 +78,6 @@ def addActivityUser():
 
 @app.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
-    time.sleep(1)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -93,7 +90,6 @@ def addActivity(activityName=None):
 
 @app.route('/activities')
 def activities():
-    time.sleep(1)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -116,7 +112,7 @@ def activities():
         
         # get activities M:M data -- restricted by locale & user
         # restrict activities available to book to those in your locale which you aren't already doing
-        activitiesInYourLocale = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON Activities.activityID = ActivitiesLocales.activityID LEFT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesLocales.localeID = (?) AND ActivitiesUsers.userID is NULL""", [localeID]).fetchall()
+        activitiesInYourLocale = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON Activities.activityID = ActivitiesLocales.activityID LEFT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesLocales.localeID = (?) AND ActivitiesUsers.userID <> (?)""", (localeID, userID,)).fetchall()
         # restrict activities locales available for deletion to only those in your locale
         activitiesLocales = cur.execute("SELECT Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON ActivitiesLocales.activityID = Activities.activityID WHERE ActivitiesLocales.localeID = (?)", (localeID,)).fetchall()
         # restrict activities users available for deletion to only yours
@@ -133,7 +129,6 @@ def activities():
 
 @app.route('/add-walk', methods=['GET'])
 def addWalk(walkName=None):
-    time.sleep(1)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -169,7 +164,6 @@ def addWalk(walkName=None):
 
 @app.route('/walks')
 def walks():
-    time.sleep(1)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -190,7 +184,6 @@ def walks():
 
 @app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
-    time.sleep(1)
     print(user)
     db = get_db()
     cur = db.cursor()
@@ -207,7 +200,6 @@ def addLocale(localeName=None):
 
 @app.route('/locales')
 def locales():
-    time.sleep(1)
     print(user)
     if user['userID'] == 0:
         return redirect('/login')
@@ -225,7 +217,6 @@ def locales():
 
 @app.route('/complete-registration', methods=['GET'])
 def completeRegistration(firstName=None, lastName=None, localeName=None):
-    time.sleep(1)
     print(user)
     # reset global user data
     user['userID'] = 0
@@ -274,13 +265,11 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
-    time.sleep(1)
     print(user)
     return render_template('register.html', title='Register')
 
 @app.route('/complete-login', methods=['GET'])
 def completeLogin(localeName=None):
-    time.sleep(1)
     print(user)
     # reset global user data
     user['userID'] = 0
@@ -300,6 +289,8 @@ def completeLogin(localeName=None):
     localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())#[0]
     if localeID is None:
         flash('Login unsuccessful! Locale does not exist. Please try again.', 'danger')
+        db.commit()
+        db.close()
         return redirect('/login')
     localeID = localeID[0]
     
@@ -307,6 +298,8 @@ def completeLogin(localeName=None):
     userID = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())
     if userID is None:
         flash('Login unsuccessful! A user with these characteristics does not exist. Please try again.', 'danger')
+        db.commit()
+        db.close()
         return redirect('/login')
     userID = userID[0]
 
@@ -325,17 +318,17 @@ def completeLogin(localeName=None):
     # other scenario I haven't thought of (maybe delete, maybe exists)
     else:
         flash('Login unsuccessful! Please try again.', 'danger')
+        db.commit()
+        db.close()
     return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    time.sleep(1)
     print(user)
     return render_template('login.html', title='Log In')
 
 @app.route('/reset-db')
 def reset_db():
-    time.sleep(1)
     print(user)
     with app.app_context():
         db = get_db()
@@ -350,11 +343,11 @@ def reset_db():
     user['lastName'] = "Last Name"
     user['localeName'] = "Locale Name"
 
+    db.close()
     return redirect('/login')
 
 @app.route('/logout')
 def logout():
-    time.sleep(1)
     print(user)
 
     # reset global user data
