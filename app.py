@@ -14,11 +14,12 @@ def index():
     cur = db.cursor()
 
     # if the database is down, reset it
-    if not cur.execute("""SELECT EXISTS(
-       SELECT * 
-       FROM information_schema.tables 
-       WHERE table_schema = 'db' 
-       AND table_name = 'Users');"""):
+    if not cur.execute("""
+        SELECT EXISTS(
+        SELECT 1 
+        FROM USERS);
+        """):
+    
         return redirect('/reset-db')
 
     # if there is no current session, send user to login
