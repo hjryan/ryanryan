@@ -6,10 +6,6 @@ import sqlite3
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
-# error?? handling??
-@app.errorhandler(500):
-    return redirect('/reset-db')
-
 @app.route('/')
 def index():
     # open connection
@@ -24,7 +20,7 @@ def index():
     #     AND name='{Users}';
     #     """)):
 
-        return redirect('/reset-db')
+        # return redirect('/reset-db')
 
     # if there is no current session, send user to login
     if session == {}:
@@ -583,6 +579,9 @@ def logout():
     
     return redirect('/login')
 
+@app.errorhandler(Exception)
+def exception_handler(error):
+    return redirect('/reset-db')
 
 # # Auto-closes db connection at the end of each request
 # @app.teardown_appcontext
