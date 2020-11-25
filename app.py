@@ -15,11 +15,12 @@ def index():
 
     # if the database is down, reset it
     if not cur.execute("""
-        SELECT EXISTS(
-        SELECT 1 
-        FROM USERS);
+        SELECT name 
+        FROM sqlite_master 
+        WHERE type='table' 
+        AND name='{Users}';
         """):
-    
+
         return redirect('/reset-db')
 
     # if there is no current session, send user to login
