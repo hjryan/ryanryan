@@ -6,6 +6,9 @@ import sqlite3
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
+# error?? handling??
+@app.errorhandler(500):
+    return redirect('/reset-db')
 
 @app.route('/')
 def index():
@@ -13,14 +16,13 @@ def index():
     db = get_db()
     cur = db.cursor()
 
-
-    # if the database is down, reset it
-    if not (cur.execute("""
-        SELECT name 
-        FROM sqlite_master 
-        WHERE type='table' 
-        AND name='{Users}';
-        """)):
+    # # if the database is down, reset it
+    # if not (cur.execute("""
+    #     SELECT name 
+    #     FROM sqlite_master 
+    #     WHERE type='table' 
+    #     AND name='{Users}';
+    #     """)):
 
         return redirect('/reset-db')
 
