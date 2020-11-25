@@ -111,8 +111,8 @@ def addActivityUser():
         # find activity name (for pop-up)
         activityName = cur.execute("""
             SELECT activityName 
-            FROM Activities W
-            HERE activityID = (?) 
+            FROM Activities 
+            WHERE activityID = (?) 
             """,[activityID]).fetchone()[0]
 
         flash(f"Enjoy {activityName}!", 'success')
