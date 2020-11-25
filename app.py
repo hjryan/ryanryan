@@ -35,7 +35,7 @@ def index():
         
         # close connection
         db.commit()
-        db.close()
+        # db.close()
 
         return render_template(
             'index.html', 
@@ -71,7 +71,7 @@ def addActLoc():
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return redirect('/activities')
 
@@ -118,7 +118,7 @@ def addActivityUser():
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return redirect('/')  
 
@@ -142,7 +142,7 @@ def addActivity(activityName=None):
 
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return redirect('/activities')
 
@@ -213,7 +213,7 @@ def activities():
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return render_template(
         'activities.html', 
@@ -276,7 +276,7 @@ def addWalk(walkName=None):
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return redirect('/walks')
 
@@ -317,7 +317,7 @@ def walks():
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
     
     return render_template(
         'walks.html', 
@@ -345,7 +345,7 @@ def addLocale(localeName=None):
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return redirect('/locales')
 
@@ -375,7 +375,7 @@ def locales():
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return render_template(
         'locales.html', 
@@ -447,7 +447,7 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
 
         # close connection
         db.commit()
-        db.close()
+        # db.close()
 
         return redirect('/')
 
@@ -456,7 +456,7 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
     
     # close connection
     db.commit()
-    db.close()
+    # db.close()
 
     return redirect('/register') 
 
@@ -489,7 +489,7 @@ def completeLogin(localeName=None):
     if localeID is None:
         flash('Login unsuccessful! Locale does not exist. Please try again.', 'danger')
         db.commit()
-        db.close()
+        # db.close()
         return redirect('/login')
     localeID = localeID[0]
     
@@ -504,7 +504,7 @@ def completeLogin(localeName=None):
     if userID is None:
         flash('Login unsuccessful! A user with these characteristics does not exist. Please try again.', 'danger')
         db.commit()
-        db.close()
+        # db.close()
         return redirect('/login')
     userID = userID[0]
 
@@ -539,7 +539,7 @@ def completeLogin(localeName=None):
         
         # close connection
         db.commit()
-        db.close()
+        # db.close()
         
         return redirect('/')
 
@@ -563,7 +563,7 @@ def reset_db():
     session.clear()
 
     # close connection
-    db.close()
+    # db.close()
 
     return redirect('/login')
 
@@ -577,10 +577,10 @@ def logout():
     return redirect('/login')
 
 
-# @app.errorhandler(Exception)
-# def exception_handler(error):
-#     # if the database is down, reset it
-#     return redirect('/reset-db')
+@app.errorhandler(Exception)
+def exception_handler(error):
+    # if the database is down, reset it
+    return redirect('/reset-db')
 
 
 if __name__ == '__main__':
