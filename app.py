@@ -16,6 +16,8 @@ user = {
 
 @app.route('/')
 def index():
+    if get_db() is None:
+        return redirect('/reset-db')
     time.sleep(1)
     print(user)
     if user['userID'] == 0:
@@ -363,12 +365,12 @@ def logout():
 
     return redirect('/login')
 
-# Auto-closes db connection at the end of each request
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(user, '_database', None)
-    if db is not None:
-        db.close()
+# # Auto-closes db connection at the end of each request
+# @app.teardown_appcontext
+# def close_connection(exception):
+#     db = getattr(user, '_database', None)
+#     if db is not None:
+#         db.close()
 
 
 if __name__ == '__main__':
