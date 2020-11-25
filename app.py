@@ -112,7 +112,7 @@ def activities():
         
         # get activities M:M data -- restricted by locale & user
         # restrict activities available to book to those in your locale which you aren't already doing
-        activitiesInYourLocale = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON Activities.activityID = ActivitiesLocales.activityID LEFT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesLocales.localeID = (?) AND ActivitiesUsers.userID <> (?)""", (localeID, userID,)).fetchall()
+        activitiesInYourLocale = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON Activities.activityID = ActivitiesLocales.activityID LEFT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesLocales.localeID = (?) AND (ActivitiesUsers.userID <> (?) OR ActivitiesUsers.userID IS NULL)""", (localeID, userID,)).fetchall()
         # restrict activities locales available for deletion to only those in your locale
         activitiesLocales = cur.execute("SELECT Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON ActivitiesLocales.activityID = Activities.activityID WHERE ActivitiesLocales.localeID = (?)", (localeID,)).fetchall()
         # restrict activities users available for deletion to only yours
