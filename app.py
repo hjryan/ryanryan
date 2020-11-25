@@ -17,8 +17,8 @@ app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 def index():
     if get_db() is None:
         return redirect('/reset-db')
-    # if session['userID'] == 0:
-    #     return redirect('/login')
+    if session == {}:
+        return redirect('/login')
     else:
         db = get_db()
         cur = db.cursor()
@@ -85,8 +85,8 @@ def addActivity(activityName=None):
 
 @app.route('/activities')
 def activities():
-    # if session['userID'] == 0:
-    #     return redirect('/login')
+    if session == {}:
+        return redirect('/login')
 
     
     db = get_db()
@@ -157,8 +157,8 @@ def addWalk(walkName=None):
 
 @app.route('/walks')
 def walks():
-    # if session['userID'] == 0:
-    #     return redirect('/login')
+    if session == {}:
+        return redirect('/login')
 
     db = get_db()
     db.row_factory = sqlite3.Row
@@ -191,8 +191,8 @@ def addLocale(localeName=None):
 
 @app.route('/locales')
 def locales():
-    # if session['userID'] == 0:
-    #     return redirect('/login')
+    if session == {}:
+        return redirect('/login')
 
     db = get_db()
     db.row_factory = sqlite3.Row
@@ -317,16 +317,24 @@ def reset_db():
     print("Database Reset")
 
     # reset global user data
-    session.clear()
+    #session.clear()
+    session.pop('userID', None)
+    session.pop('firstName', None)
+    session.pop('lastName', None)
+    session.pop('localeName', None)
 
     db.close()
     return redirect('/login')
 
 @app.route('/logout')
 def logout():
-
     # reset global user data
-    session.clear()
+    #session.clear()
+    session.pop('userID', None)
+    session.pop('firstName', None)
+    session.pop('lastName', None)
+    session.pop('localeName', None)
+    
 
     return redirect('/login')
 
