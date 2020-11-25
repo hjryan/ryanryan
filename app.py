@@ -1,10 +1,17 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, session
+from flask import Flask, render_template, url_for, flash, redirect, request, session, g
 from db_con import get_db
 import sqlite3
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
+
+# auto-closes db connection at the end of each request
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
 @app.route('/')
 def index():
@@ -570,10 +577,10 @@ def logout():
     return redirect('/login')
 
 
-@app.errorhandler(Exception)
-def exception_handler(error):
-    # if the database is down, reset it
-    return redirect('/reset-db')
+# @app.errorhandler(Exception)
+# def exception_handler(error):
+#     # if the database is down, reset it
+#     return redirect('/reset-db')
 
 
 if __name__ == '__main__':
