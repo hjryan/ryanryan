@@ -13,13 +13,14 @@ def index():
     db = get_db()
     cur = db.cursor()
 
+
     # if the database is down, reset it
-    if cur.execute("""
+    if not (cur.execute("""
         SELECT name 
         FROM sqlite_master 
         WHERE type='table' 
         AND name='{Users}';
-        """):
+        """)):
 
         return redirect('/reset-db')
 
