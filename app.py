@@ -12,16 +12,6 @@ def index():
     db = get_db()
     cur = db.cursor()
 
-    # # if the database is down, reset it
-    # if not (cur.execute("""
-    #     SELECT name 
-    #     FROM sqlite_master 
-    #     WHERE type='table' 
-    #     AND name='{Users}';
-    #     """)):
-
-        # return redirect('/reset-db')
-
     # if there is no current session, send user to login
     if session == {}:
         return redirect('/login')
@@ -579,16 +569,11 @@ def logout():
     
     return redirect('/login')
 
+
 @app.errorhandler(Exception)
 def exception_handler(error):
+    # if the database is down, reset it
     return redirect('/reset-db')
-
-# # Auto-closes db connection at the end of each request
-# @app.teardown_appcontext
-# def close_connection(exception):
-#     db = getattr(user, '_database', None)
-#     if db is not None:
-#         db.close()
 
 
 if __name__ == '__main__':
