@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask, render_template, url_for, flash, redirect, request, session
 from db_con import get_db
 import sqlite3
 
@@ -6,38 +6,35 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
 # experience should be based on who y'are
-user = {
-    'userID' : 0,
-    'firstName': "First Name",
-    'lastName': "Last Name",
-    'localeName' : "Locale Name"
-}
+# user = {
+#     'userID' : 0,
+#     'firstName': "First Name",
+#     'lastName': "Last Name",
+#     'localeName' : "Locale Name"
+# }
 
 @app.route('/')
 def index():
     if get_db() is None:
         return redirect('/reset-db')
-    print(user)
-    if user['userID'] == 0:
-        return redirect('/login')
+    # if session['userID'] == 0:
+    #     return redirect('/login')
     else:
         db = get_db()
         cur = db.cursor()
         
-        activities = cur.execute("""SELECT Activities.activityName FROM ActivitiesUsers LEFT JOIN Activities ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesUsers.UserID = (?) """, [user['userID']]).fetchall()
+        activities = cur.execute("""SELECT Activities.activityName FROM ActivitiesUsers LEFT JOIN Activities ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesUsers.UserID = (?) """, [session['userID']]).fetchall()
         
         db.commit()
         db.close()
-        return render_template('index.html', title='User Page', user=user, activities=activities)
+        return render_template('index.html', title='User Page', user=session, activities=activities)
 
 @app.route('/home')
 def home():
-    print(user)
     return render_template('home.html')
 
 @app.route('/add-activity-locale', methods=['GET'])
 def addActLoc():
-    print(user)
     db = get_db()
     cur = db.cursor()
 
@@ -53,7 +50,6 @@ def addActLoc():
 
 @app.route('/add-activity-user', methods=['GET'])
 def addActivityUser():
-    print(user)
     db = get_db()
     cur = db.cursor()
 
@@ -61,11 +57,11 @@ def addActivityUser():
     activityID = request.args.get('activityID')
     
     # restrict adds to only new relationships
-    existingRelationship = (cur.execute("SELECT activityID FROM ActivitiesUsers WHERE activityID = (?) AND userID = (?)", (activityID, user['userID'])).fetchone())
+    existingRelationship = (cur.execute("SELECT activityID FROM ActivitiesUsers WHERE activityID = (?) AND userID = (?)", (activityID, session['userID'])).fetchone())
     if existingRelationship is None:
         # add ActivityUser
         cur.execute("INSERT INTO ActivitiesUsers (activityID, userID) VALUES (?, ?)", 
-            (activityID, user['userID']))
+            (activityID, session['userID']))
         # find activity name (for pop-up)
         activityName = cur.execute("""SELECT activityName FROM Activities WHERE activityID = (?) """, [activityID]).fetchone()[0]
         flash(f"Enjoy {activityName}!", 'success')
@@ -78,7 +74,6 @@ def addActivityUser():
 
 @app.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
-    print(user)
     db = get_db()
     cur = db.cursor()
     activityName = request.args.get('activityName')
@@ -90,52 +85,50 @@ def addActivity(activityName=None):
 
 @app.route('/activities')
 def activities():
-    print(user)
-    if user['userID'] == 0:
-        return redirect('/login')
+    # if session['userID'] == 0:
+    #     return redirect('/login')
 
-    else:
-        db = get_db()
-        db.row_factory = sqlite3.Row
-        cur = db.cursor()
+    
+    db = get_db()
+    db.row_factory = sqlite3.Row
+    cur = db.cursor()
 
-        # get global user data
-        userID = user['userID']
-        localeName = user['localeName']
-        # get localeID based on localeName
-        localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
+    # get global user data
+    userID = session['userID']
+    localeName = session['localeName']
+    # get localeID based on localeName
+    localeID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [localeName]).fetchone())[0]
 
 
-        # get activities & locales data -- all
-        activities = cur.execute("""SELECT * FROM Activities""").fetchall()
-        locales = cur.execute("SELECT * FROM Locales").fetchall()
-        
-        # get activities M:M data -- restricted by locale & user
-        # restrict activities available to book to those in your locale which you aren't already doing
-        activitiesInYourLocale = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON Activities.activityID = ActivitiesLocales.activityID LEFT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesLocales.localeID = (?) AND (ActivitiesUsers.userID <> (?) OR ActivitiesUsers.userID IS NULL)""", (localeID, userID,)).fetchall()
-        # restrict activities locales available for deletion to only those in your locale
-        activitiesLocales = cur.execute("SELECT Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON ActivitiesLocales.activityID = Activities.activityID WHERE ActivitiesLocales.localeID = (?)", (localeID,)).fetchall()
-        # restrict activities users available for deletion to only yours
-        activitiesUsers = cur.execute("SELECT Activities.activityName, Users.firstName FROM ActivitiesUsers LEFT JOIN Activities ON ActivitiesUsers.activityID = Activities.activityID LEFT JOIN Users on Users.userID = ActivitiesUsers.userID WHERE ActivitiesUsers.userID = (?)", (userID,)).fetchall()
-        
-        db.commit()
-        db.close()
-        return render_template('activities.html', title='Activities', 
-            activities=activities, 
-            activitiesLocales=activitiesLocales, 
-            locales=locales, 
-            activitiesUsers=activitiesUsers,
-            activitiesInYourLocale=activitiesInYourLocale)
+    # get activities & locales data -- all
+    activities = cur.execute("""SELECT * FROM Activities""").fetchall()
+    locales = cur.execute("SELECT * FROM Locales").fetchall()
+    
+    # get activities M:M data -- restricted by locale & user
+    # restrict activities available to book to those in your locale which you aren't already doing
+    activitiesInYourLocale = cur.execute("""SELECT Activities.activityID, Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON Activities.activityID = ActivitiesLocales.activityID LEFT JOIN ActivitiesUsers ON Activities.activityID = ActivitiesUsers.activityID WHERE ActivitiesLocales.localeID = (?) AND (ActivitiesUsers.userID <> (?) OR ActivitiesUsers.userID IS NULL)""", (localeID, userID,)).fetchall()
+    # restrict activities locales available for deletion to only those in your locale
+    activitiesLocales = cur.execute("SELECT Activities.activityName FROM ActivitiesLocales LEFT JOIN Activities ON ActivitiesLocales.activityID = Activities.activityID WHERE ActivitiesLocales.localeID = (?)", (localeID,)).fetchall()
+    # restrict activities users available for deletion to only yours
+    activitiesUsers = cur.execute("SELECT Activities.activityName, Users.firstName FROM ActivitiesUsers LEFT JOIN Activities ON ActivitiesUsers.activityID = Activities.activityID LEFT JOIN Users on Users.userID = ActivitiesUsers.userID WHERE ActivitiesUsers.userID = (?)", (userID,)).fetchall()
+    
+    db.commit()
+    db.close()
+    return render_template('activities.html', title='Activities', 
+        activities=activities, 
+        activitiesLocales=activitiesLocales, 
+        locales=locales, 
+        activitiesUsers=activitiesUsers,
+        activitiesInYourLocale=activitiesInYourLocale)
 
 @app.route('/add-walk', methods=['GET'])
 def addWalk(walkName=None):
-    print(user)
     db = get_db()
     cur = db.cursor()
 
     # get global user data
-    userID = user['userID']
-    originLocaleName = user['localeName']
+    userID = session['userID']
+    originLocaleName = session['localeName']
 
     # get localeID based on localeName
     originID = (cur.execute("SELECT localeID FROM Locales WHERE localeName = (?)", [originLocaleName]).fetchone())[0]
@@ -149,7 +142,7 @@ def addWalk(walkName=None):
     
     # update global user data
     localeName = (cur.execute("SELECT localeName FROM Locales WHERE localeID = (?)", [destination]).fetchone())[0]
-    user['localeName'] = localeName
+    session['localeName'] = localeName
     
     # add historical walk data to Walks table
     cur.execute("INSERT INTO Walks (walkName, origin, destination, userID) VALUES (?, ?, ?, ?)", (walkName, originID, destination, userID,))
@@ -164,9 +157,8 @@ def addWalk(walkName=None):
 
 @app.route('/walks')
 def walks():
-    print(user)
-    if user['userID'] == 0:
-        return redirect('/login')
+    # if session['userID'] == 0:
+    #     return redirect('/login')
 
     db = get_db()
     db.row_factory = sqlite3.Row
@@ -184,7 +176,6 @@ def walks():
 
 @app.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
-    print(user)
     db = get_db()
     cur = db.cursor()
 
@@ -200,9 +191,8 @@ def addLocale(localeName=None):
 
 @app.route('/locales')
 def locales():
-    print(user)
-    if user['userID'] == 0:
-        return redirect('/login')
+    # if session['userID'] == 0:
+    #     return redirect('/login')
 
     db = get_db()
     db.row_factory = sqlite3.Row
@@ -217,12 +207,8 @@ def locales():
 
 @app.route('/complete-registration', methods=['GET'])
 def completeRegistration(firstName=None, lastName=None, localeName=None):
-    print(user)
     # reset global user data
-    user['userID'] = 0
-    user['firstName'] = "First Name"
-    user['lastName'] = "Last Name"
-    user['localeName'] = "Locale Name"
+    session.clear()
 
     db = get_db()
     cur = db.cursor()
@@ -248,10 +234,10 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
         # add user
         cur.execute("INSERT INTO Users (firstName, lastName, localeID) VALUES (?, ?, ?)", (firstName, lastName, localeID,))
         # update this lil dictionary which is used in the user's home page
-        user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
-        user['firstName'] = firstName
-        user['lastName'] = lastName
-        user['localeName'] = localeName
+        session['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
+        session['firstName'] = firstName
+        session['lastName'] = lastName
+        session['localeName'] = localeName
         flash(f"{firstName}'s account created!", 'success')
         db.commit()
         db.close()
@@ -265,17 +251,12 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
 
 @app.route('/register', methods=['GET'])
 def register(localeName=None):
-    print(user)
     return render_template('register.html', title='Register')
 
 @app.route('/complete-login', methods=['GET'])
 def completeLogin(localeName=None):
-    print(user)
     # reset global user data
-    user['userID'] = 0
-    user['firstName'] = "First Name"
-    user['lastName'] = "Last Name"
-    user['localeName'] = "Locale Name"
+    session.clear()
 
     db = get_db()
     cur = db.cursor()
@@ -306,10 +287,10 @@ def completeLogin(localeName=None):
     # if values provided by user match those for userID found, log in
     if firstName == (cur.execute("SELECT firstName FROM Users WHERE userID = (?)", [userID]).fetchall())[0][0] and lastName == (cur.execute("SELECT lastName FROM Users WHERE userID = (?)", [userID]).fetchall())[0][0] and localeID == (cur.execute("SELECT localeID FROM Users WHERE userID = (?)", [userID]).fetchall())[0][0]:
         # update this lil dictionary which is used in the user's home page
-        user['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
-        user['firstName'] = firstName
-        user['lastName'] = lastName
-        user['localeName'] = localeName
+        session['userID'] = (cur.execute("SELECT userID FROM Users WHERE firstName = (?) AND lastName = (?) AND localeID = (?)", (firstName, lastName, localeID,)).fetchone())[0]
+        session['firstName'] = firstName
+        session['lastName'] = lastName
+        session['localeName'] = localeName
         flash(f"Welcome back, {firstName}!", 'success')
         db.commit()
         db.close()
@@ -324,12 +305,10 @@ def completeLogin(localeName=None):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    print(user)
     return render_template('login.html', title='Log In')
 
 @app.route('/reset-db')
 def reset_db():
-    print(user)
     with app.app_context():
         db = get_db()
         with app.open_resource('setup-queries.sql', mode='r') as file:
@@ -338,23 +317,16 @@ def reset_db():
     print("Database Reset")
 
     # reset global user data
-    user['userID'] = 0
-    user['firstName'] = "First Name"
-    user['lastName'] = "Last Name"
-    user['localeName'] = "Locale Name"
+    session.clear()
 
     db.close()
     return redirect('/login')
 
 @app.route('/logout')
 def logout():
-    print(user)
 
     # reset global user data
-    user['userID'] = 0
-    user['firstName'] = "First Name"
-    user['lastName'] = "Last Name"
-    user['localeName'] = "Locale Name"
+    session.clear()
 
     return redirect('/login')
 
