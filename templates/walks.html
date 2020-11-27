@@ -28,22 +28,20 @@
 <br><br>
 <h2>Rename existing Walks:</h2>
 <table>
-   
   <tr>
-    <th>walkID</th>
-    <th>walkName</th> 
+    <th>walker</th> 
+    <th>walk name</th> 
     <th>origin</th> 
     <th>destination</th> 
-    <th>walker</th> 
 </tr>
 {% for walk in data %}
 <tr>
     <form id="updateExisting" action="/update-walk">
-    <td><input type="hidden" name="walkID" value="{{walk['walkID']}}">{{walk['walkID']}}</td>
+    <td>{{walk['walker']}}</td>
     <td><input type="text" name="walkName" placeholder="{{walk['walkName']}}"></td>
     <td>{{walk['origin']}}</td>
     <td>{{walk['destination']}}</td>
-    <td>{{walk['walker']}}</td>
+    <input type="hidden" name="walkID" value="{{walk['walkID']}}">
     <td><input type="submit" value="update" id="updateButton" required></td>
     </form>
     <form id="deleteExisting" action="/delete-walk">

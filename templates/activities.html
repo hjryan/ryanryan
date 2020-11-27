@@ -10,15 +10,19 @@
     <h2>Edit existing (global) activities:</h2>
     <table>
     <tr>
-        <th>activityID</th>
-        <th>activityName</th> 
+        <th>activity name</th> 
     </tr>
     {% for activity in activities %}
         <tr>
-            <td>{{activity['activityID']}}</td>
-            <td>{{activity['activityName']}}</td>
-            <td><input type="submit" value="update" id="updateButton" required></td>
-            <td><input type="submit" value="delete" id="deleteButton" required></td>
+            <form id="updateExisting" action="/update-activity">
+                <td><input type="text" name="activityName" placeholder="{{activity['activityName']}}">{{activities['activityName']}}</td>
+                <input type="hidden" name="activityID" value="{{activity['activityID']}}">
+                <td><input type="submit" value="update" id="updateButton" required></td>
+            </form>
+            <form id="deleteExisting" action="/delete-activity">
+                <input type="hidden" name="activityID" value="{{activity['activityID']}}">
+                <td><input type="submit" value="delete" id="deleteButton" required></td>
+            </form>
         </tr>
     {% endfor %}
     </table>

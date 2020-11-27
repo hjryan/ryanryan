@@ -147,6 +147,54 @@ def addActivity(activityName=None):
     return redirect('/activities')
 
 
+@app.route('/update-activity', methods=['GET'])
+def updateActivity(activityName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    activityName = request.args.get('activityName')
+    activityID = request.args.get('activityID')
+    
+    # update activity name
+    cur.execute("""
+        UPDATE Activities 
+        SET activityName = (?) 
+        WHERE activityID = (?)
+        """,(activityName, activityID,))
+
+    # close connection
+    db.commit()
+    # db.close()
+
+    return redirect('/activities')
+
+
+@app.route('/delete-activity', methods=['GET'])
+def deleteActivity(activityName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    activityID = request.args.get('activityID')
+    
+    # delete activity
+    cur.execute("""
+        DELETE FROM Activities 
+        WHERE activityID = (?)
+        """,(activityID,))
+
+    # close connection
+    db.commit()
+    # db.close()
+
+    return redirect('/activities')
+
+
 @app.route('/activities')
 def activities():
 
