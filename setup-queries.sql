@@ -37,6 +37,7 @@ FOREIGN KEY(userID) REFERENCES Users(userID) ON DELETE SET NULL
 INSERT INTO Walks(walkName, destination, origin, userID) VALUES("Very long walk", "2", "1", "1");
 INSERT INTO Walks(walkName, destination, origin, userID) VALUES("Very long walk in reverse", "1", "2", "2");
 INSERT INTO Walks(walkName, destination, origin, userID) VALUES("Walk to Mars", "3", "1", "3");
+INSERT INTO Walks(walkName, destination, origin, userID) VALUES("Cheeto re-up", "4", "5", "1");
 CREATE TABLE Activities(
 activityID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 activityName VARCHAR(40) NOT NULL
@@ -53,15 +54,18 @@ FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE SET NULL,
 FOREIGN KEY(userID) REFERENCES Users(userID) ON DELETE SET NULL
 );
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (1,1);
+INSERT INTO ActivitiesUsers(activityID, userID) VALUES (4,1);
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (2,2);
+INSERT INTO ActivitiesUsers(activityID, userID) VALUES (3,2);
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (3,3);
-INSERT INTO ActivitiesUsers(activityID, userID) VALUES (1,4);
 CREATE TABLE ActivitiesLocales(
 activityID INTEGER,
 localeID INTEGER,
 FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE SET NULL,
 FOREIGN KEY(localeID) REFERENCES Locales(localeID) ON DELETE SET NULL
 );
-INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (1,1);
-INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (2,2);
-INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (3,3);
+INSERT INTO ActivitiesUsers(activityID, userID) VALUES (1,1);
+INSERT INTO ActivitiesUsers(activityID, userID) VALUES (4,1);
+INSERT INTO ActivitiesUsers(activityID, userID) VALUES (2,2);
+INSERT INTO ActivitiesUsers(activityID, userID) VALUES (3,2);
+INSERT INTO ActivitiesUsers(activityID, userID) VALUES (3,3);
