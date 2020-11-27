@@ -51,7 +51,7 @@ CREATE TABLE ActivitiesUsers(
 activityID INTEGER,
 userID INTEGER,
 FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE CASCADE,
-FOREIGN KEY(userID) REFERENCES Users(userID) ON DELETE SET NULL
+FOREIGN KEY(userID) REFERENCES Users(userID) ON DELETE SET CASCADE
 );
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (1,1);
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (4,1);
@@ -62,7 +62,7 @@ CREATE TABLE ActivitiesLocales(
 activityID INTEGER,
 localeID INTEGER,
 FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE CASCADE,
-FOREIGN KEY(localeID) REFERENCES Locales(localeID) ON DELETE SET NULL
+FOREIGN KEY(localeID) REFERENCES Locales(localeID) ON DELETE CASCADE
 );
 INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (1,1);
 INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (4,1);
