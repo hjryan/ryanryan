@@ -50,7 +50,7 @@ INSERT INTO Activities(activityName) VALUES("coughing into the abyss");
 CREATE TABLE ActivitiesUsers(
 activityID INTEGER,
 userID INTEGER,
-FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE SET NULL,
+FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE CASCADE,
 FOREIGN KEY(userID) REFERENCES Users(userID) ON DELETE SET NULL
 );
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (1,1);
