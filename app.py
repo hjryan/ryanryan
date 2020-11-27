@@ -291,8 +291,6 @@ def updateWalk(walkName=None):
     # get user input
     walkName = request.args.get('walkName')
     walkID = request.args.get('walkID')
-
-    print("name: ", walkName,"id: ", walkID)
     
     # update walk name
     cur.execute("""
@@ -300,6 +298,29 @@ def updateWalk(walkName=None):
         SET walkName = (?) 
         WHERE walkID = (?)
         """,(walkName, walkID,))
+
+    # close connection
+    db.commit()
+    # db.close()
+
+    return redirect('/walks')
+
+
+@app.route('/delete-walk', methods=['GET'])
+def deleteWalk(walkName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    walkID = request.args.get('walkID')
+    
+    # update walk name
+    cur.execute("""
+        DELETE FROM Walks 
+        WHERE walkID = (?)
+        """,(walkID,))
 
     # close connection
     db.commit()
