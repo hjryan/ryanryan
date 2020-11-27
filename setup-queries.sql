@@ -61,7 +61,7 @@ INSERT INTO ActivitiesUsers(activityID, userID) VALUES (3,3);
 CREATE TABLE ActivitiesLocales(
 activityID INTEGER,
 localeID INTEGER,
-FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE SET NULL,
+FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE CASCADE,
 FOREIGN KEY(localeID) REFERENCES Locales(localeID) ON DELETE SET NULL
 );
 INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (1,1);
