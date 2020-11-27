@@ -47,6 +47,7 @@
     <td><input type="submit" value="update" id="updateButton" required></td>
     </form>
     <form id="deleteExisting" action="/delete-walk">
+    <input type="hidden" name="walkID" value="{{walk['walkID']}}">
     <td><input type="submit" value="delete" id="deleteButton" required></td>
     </form>
 </tr>
