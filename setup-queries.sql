@@ -26,7 +26,7 @@ INSERT INTO Users(firstName, lastName, localeID) VALUES("Ryan", "McKenzie", "2")
 INSERT INTO Users(firstName, lastName, localeID) VALUES("Sam", "Ryan", "3");
 CREATE TABLE Walks(
 walkID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-walkName VARCHAR(40) NOT NULL,
+walkName VARCHAR(40),
 destination INTEGER,
 origin INTEGER,
 userID INTEGER,
