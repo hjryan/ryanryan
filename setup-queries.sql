@@ -64,8 +64,8 @@ localeID INTEGER,
 FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE SET NULL,
 FOREIGN KEY(localeID) REFERENCES Locales(localeID) ON DELETE SET NULL
 );
-INSERT INTO ActivitiesUsers(activityID, userID) VALUES (1,1);
-INSERT INTO ActivitiesUsers(activityID, userID) VALUES (4,1);
-INSERT INTO ActivitiesUsers(activityID, userID) VALUES (2,2);
-INSERT INTO ActivitiesUsers(activityID, userID) VALUES (3,2);
-INSERT INTO ActivitiesUsers(activityID, userID) VALUES (3,3);
+INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (1,1);
+INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (4,1);
+INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (2,2);
+INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (3,2);
+INSERT INTO ActivitiesLocales(activityID, localeID) VALUES (3,3);
