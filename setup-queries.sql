@@ -51,7 +51,7 @@ CREATE TABLE ActivitiesUsers(
 activityID INTEGER,
 userID INTEGER,
 FOREIGN KEY(activityID) REFERENCES Activities(activityID) ON DELETE CASCADE,
-FOREIGN KEY(userID) REFERENCES Users(userID) ON DELETE SET CASCADE
+FOREIGN KEY(userID) REFERENCES Users(userID) ON DELETE CASCADE
 );
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (1,1);
 INSERT INTO ActivitiesUsers(activityID, userID) VALUES (4,1);
