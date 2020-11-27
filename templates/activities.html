@@ -3,8 +3,8 @@
     <h2>Add an activity!</h2>
     <p>This adds an entry to Activities</p>
     <form id="addNew" action="/add-activity">
-        <input type="text" name="activityName" placeholder="activity name" required>
-        <input type="submit" value="add!" id="addNewButton" required>
+        <input type="text" name="activityName" placeholder="activity name">
+        <input type="submit" value="add!" id="addNewButton">
     </form>
     <p></p>
     <h2>Edit existing (global) activities:</h2>
@@ -17,11 +17,11 @@
             <form id="updateExisting" action="/update-activity">
                 <td><input type="text" name="activityName" placeholder="{{activity['activityName']}}">{{activities['activityName']}}</td>
                 <input type="hidden" name="activityID" value="{{activity['activityID']}}">
-                <td><input type="submit" value="update" id="updateButton" required></td>
+                <td><input type="submit" value="update" id="updateButton"></td>
             </form>
             <form id="deleteExisting" action="/delete-activity">
                 <input type="hidden" name="activityID" value="{{activity['activityID']}}">
-                <td><input type="submit" value="delete" id="deleteButton" required></td>
+                <td><input type="submit" value="delete" id="deleteButton"></td>
             </form>
         </tr>
     {% endfor %}
@@ -40,7 +40,7 @@
                 <option value="{{ locale['localeID'] }}">{{ locale['localeName'] }}</option>
             {% endfor %}
         </select>
-    <input type="submit" value="add!" id="addNewButton" required>
+    <input type="submit" value="add!" id="addNewButton">
     </form>
     <p></p>
     <h2>Delete existing activities from your locale:</h2>
@@ -51,8 +51,11 @@
     </tr>
     {% for activity in activitiesLocales %}
         <tr>
+            <form id="deleteExistingActivityLocale" action="/delete-activity-locale">
+                <input type="hidden" name="activityID" value="{{activity['activityID']}}">
             <td>{{ activity['activityName'] }}</td>
-            <td><input type="submit" value="delete" id="deleteButton" required></td>
+            <td><input type="submit" value="delete" id="deleteButton"></td>
+            </form>
         </tr>
     {% endfor %}
     </table>
@@ -65,7 +68,7 @@
                 <option value="{{activity['activityID']}}">{{ activity['activityName'] }}</option>
             {% endfor %}
     </select>
-    <input type="submit" value="i'm doing this activity now!" id="addNewButton" required>
+    <input type="submit" value="i'm doing this activity now!" id="addNewButton">
     </form>
     <p></p>
     <h2>Delete my existing activities:</h2>
@@ -77,7 +80,10 @@
     {% for activityUser in activitiesUsers %}
         <tr>
             <td>{{ activityUser['activityName'] }}</td>
-            <td><input type="submit" value="delete" id="deleteButton" required></td>
+            <form id="deleteExistingActivityUser" action="/delete-activity-user">
+                <input type="hidden" name="activityID" value="{{activityUser['activityID']}}">
+            <td><input type="submit" value="delete" id="deleteButton"></td>
+            </form>
         </tr>
     {% endfor %}
     </table>

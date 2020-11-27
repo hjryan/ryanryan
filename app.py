@@ -76,6 +76,63 @@ def addActLoc():
     return redirect('/activities')
 
 
+@app.route('/delete-activity-locale', methods=['GET'])
+def deleteActivityLocale(activityName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    activityID = request.args.get('activityID')
+    
+    # get localeID based on localeName
+    localeID = (cur.execute("""
+        SELECT localeID 
+        FROM Locales 
+        WHERE localeName = (?)
+        """, [session['localeName']]).fetchone())[0]
+
+    # delete activity
+    cur.execute("""
+        DELETE FROM ActivitiesLocales 
+        WHERE activityID = (?)
+        AND localeID = (?)
+        """,(activityID, localeID,))
+
+    # close connection
+    db.commit()
+    # db.close()
+
+    return redirect('/activities')
+
+
+@app.route('/delete-activity-user', methods=['GET'])
+def deleteActivityUser(activityName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    activityID = request.args.get('activityID')
+
+    print("activityID: ", activityID, "userID: ", session['userID'])
+    
+    # delete activity
+    cur.execute("""
+        DELETE FROM ActivitiesUsers 
+        WHERE activityID = (?)
+        AND userID = (?)
+        """,(activityID, session['userID'],))
+
+    # close connection
+    db.commit()
+    # db.close()
+
+    return redirect('/activities')
+
+
 @app.route('/add-activity-user', methods=['GET'])
 def addActivityUser():
     
@@ -240,7 +297,9 @@ def activities():
 
     # restrict activities locales available for deletion to only those in the current user's locale
     activitiesLocales = cur.execute("""
-        SELECT Activities.activityName 
+        SELECT 
+        Activities.activityName,
+        Activities.activityID
         FROM ActivitiesLocales 
         LEFT JOIN Activities 
         ON ActivitiesLocales.activityID = Activities.activityID 
@@ -251,7 +310,8 @@ def activities():
     activitiesUsers = cur.execute("""
         SELECT 
         Activities.activityName, 
-        Users.firstName 
+        Users.firstName,
+        Activities.activityID
         FROM ActivitiesUsers 
         LEFT JOIN Activities 
         ON ActivitiesUsers.activityID = Activities.activityID 
