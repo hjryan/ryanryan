@@ -26,8 +26,9 @@
     Is the walk you're going on not here? <a class="ml-2" href="{{ url_for('locales') }}">Add a destination</a>
 </small>
 <br><br>
-<h2>Edit existing Walks:</h2>
+<h2>Rename existing Walks:</h2>
 <table>
+   
   <tr>
     <th>walkID</th>
     <th>walkName</th> 
@@ -37,13 +38,15 @@
 </tr>
 {% for walk in data %}
 <tr>
-    <td>{{walk['walkID']}}</td>
-    <td>{{walk['walkName']}}</td>
+    <form id="updateExisting" action="/update-walk">
+    <td><input type="hidden" name="walkID" value="{{walk['walkID']}}">{{walk['walkID']}}</td>
+    <td><input type="text" name="walkName" placeholder="{{walk['walkName']}}"></td>
     <td>{{walk['origin']}}</td>
     <td>{{walk['destination']}}</td>
     <td>{{walk['walker']}}</td>
     <td><input type="submit" value="update" id="updateButton" required></td>
     <td><input type="submit" value="delete" id="deleteButton" required></td>
+    </form>
 </tr>
 {% endfor %}
 </table>

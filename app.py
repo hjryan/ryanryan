@@ -281,6 +281,33 @@ def addWalk(walkName=None):
     return redirect('/walks')
 
 
+@app.route('/update-walk', methods=['GET'])
+def updateWalk(walkName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    walkName = request.args.get('walkName')
+    walkID = request.args.get('walkID')
+
+    print("name: ", walkName,"id: ", walkID)
+    
+    # update walk name
+    cur.execute("""
+        UPDATE Walks 
+        SET walkName = (?) 
+        WHERE walkID = (?)
+        """,(walkName, walkID,))
+
+    # close connection
+    db.commit()
+    # db.close()
+
+    return redirect('/walks')
+
+
 @app.route('/walks')
 def walks():
 
