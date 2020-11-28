@@ -35,7 +35,6 @@ def index():
         
         # close connection
         db.commit()
-        # db.close()
 
         return render_template(
             'index.html', 
@@ -71,7 +70,6 @@ def addActLoc():
     
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/activities')
 
@@ -100,9 +98,15 @@ def deleteActivityLocale(activityName=None):
         AND localeID = (?)
         """,(activityID, localeID,))
 
+    # if an activity is no longer available in a locale, delete for user in that locale
+    cur.execute("""
+        DELETE FROM ActivitiesUsers
+        WHERE activityID = (?)
+        AND userID = (?)
+        """,(activityID, session['userID'],))
+
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/activities')
 
@@ -128,7 +132,6 @@ def deleteActivityUser(activityName=None):
 
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/activities')
 
@@ -175,7 +178,6 @@ def addActivityUser():
     
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/')  
 
@@ -199,7 +201,6 @@ def addActivity(activityName=None):
 
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/activities')
 
@@ -224,7 +225,6 @@ def updateActivity(activityName=None):
 
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/activities')
 
@@ -247,7 +247,6 @@ def deleteActivity(activityName=None):
 
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/activities')
 
@@ -321,7 +320,6 @@ def activities():
     
     # close connection
     db.commit()
-    # db.close()
 
     return render_template(
         'activities.html', 
@@ -384,7 +382,6 @@ def addWalk(walkName=None):
     
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/walks')
 
@@ -409,7 +406,6 @@ def updateWalk(walkName=None):
 
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/walks')
 
@@ -432,7 +428,6 @@ def deleteWalk(walkName=None):
 
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/walks')
 
@@ -473,7 +468,6 @@ def walks():
     
     # close connection
     db.commit()
-    # db.close()
     
     return render_template(
         'walks.html', 
@@ -501,7 +495,6 @@ def addLocale(localeName=None):
     
     # close connection
     db.commit()
-    # db.close()
 
     return redirect('/locales')
 
@@ -531,7 +524,6 @@ def locales():
     
     # close connection
     db.commit()
-    # db.close()
 
     return render_template(
         'locales.html', 
@@ -603,7 +595,6 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
 
         # close connection
         db.commit()
-        # db.close()
 
         return redirect('/')
 
@@ -645,7 +636,6 @@ def completeLogin(localeName=None):
     if localeID is None:
         flash('Login unsuccessful! Locale does not exist. Please try again.', 'danger')
         db.commit()
-        # db.close()
         return redirect('/login')
     localeID = localeID[0]
     
@@ -660,7 +650,6 @@ def completeLogin(localeName=None):
     if userID is None:
         flash('Login unsuccessful! A user with these characteristics does not exist. Please try again.', 'danger')
         db.commit()
-        # db.close()
         return redirect('/login')
     userID = userID[0]
 
@@ -695,7 +684,6 @@ def completeLogin(localeName=None):
         
         # close connection
         db.commit()
-        # db.close()
         
         return redirect('/')
 
@@ -717,9 +705,6 @@ def reset_db():
 
     # reset session data
     session.clear()
-
-    # close connection
-    # db.close()
 
     return redirect('/login')
 
