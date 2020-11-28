@@ -379,7 +379,7 @@ def addWalk(walkName=None):
     # going for a walk should also delete your current entries in ActivitiesUsers
     cur.execute("""
         DELETE FROM ActivitiesUsers
-        WHERE User = (?)
+        WHERE userID = (?)
         """,(userID,))
     
     # close connection
