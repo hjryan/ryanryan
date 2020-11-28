@@ -376,9 +376,11 @@ def addWalk(walkName=None):
         VALUES (?, ?, ?, ?)
         """,(walkName, originID, destination, userID,))
 
-    # TO DO: going for a walk should also either:
-        # insert all of your current Activities in the ActivitiesLocales table (the activities you're doing need to now exist in your new locale)
-        # delete your current entries in ActivitiesUsers
+    # going for a walk should also delete your current entries in ActivitiesUsers
+    cur.execute("""
+        DELETE FROM ActivitiesUsers
+        WHERE User = (?)
+        """,(userID,))
     
     # close connection
     db.commit()
