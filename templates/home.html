@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h2>Pages</h2>
-<h4>Register</h4>
+<h4><br>Register</h4>
 <p>The registration page adds a new locale to the Locales table (localeName and an autoincremented localeID) if the locale does not yet exist. If the locale already exists in the Users table, the user will not be permitted to register there. Then the new user is added to the Users table -- firstName, lastName, an autoincremented userID, and the localeID that was just added. </p>
 
-<h4>Login</h4>
+<h4><br>Login</h4>
 <p>The login page uses a select statement to find the user's userID (based on the first and last name they logged in with), which is used to find the user's name, locale, and upcoming and available walks and activities.</p>
 
-<h4>Quarpedia</h4>
+<h4><br>Quarpedia</h4>
 <p>This is the user's main page, where they can see their current activity.</p>
 To change any of this content, the user needs to navigate to other links:
 <ul>
@@ -16,13 +16,13 @@ To change any of this content, the user needs to navigate to other links:
 	<li>activities to add activities to do</li>
 </ul>
 
-<h4>Locales</h4>
+<h4><br>Locales</h4>
 <p>This is simply the locales table. New locales can be added, and existing locales updated here.</p>
 
-<h4>Walks</h4>
+<h4><br>Walks</h4>
 <p>Walks updates the user's localeID in the Users table by providing the user with a dropdown of destinations they can reserve -- these (locales) are the locales no one else is currently at (locales with localeIDs not in Users). The user names this walk, and it is added to the Walks table.</p>
 
-<h4>Activities</h4>
+<h4><br>Activities</h4>
 <p>The activities page allows users to add an activity to the Activities table, the ActivitiesLocales table, and the ActivitiesUsers table (ActivitiesUsers will only allow the user to book Activities in their locale, as determined by ActivitiesLocales).</p>
 
 {% endblock content %}
