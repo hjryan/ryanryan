@@ -52,7 +52,7 @@
 					<div class="navbar-nav">
 						<a class="nav-item nav-link" href="{{ url_for('register') }}">Register 💫</a>
 						<a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-						<a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout ❌</a>
+						<a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
 						<a class="nav-item nav-link" href="{{ url_for('reset_db') }}">Reset DB</a>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 
 	<main role="main" class="container">
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-md-10">
 				{% with messages = get_flashed_messages(with_categories=true) %}
 				{% if messages %}
 				{% for category, message in messages %}

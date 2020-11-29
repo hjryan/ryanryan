@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h2>Going on a walk?</h2>
-<p>This updates the currently logged in user's localeID in the Users table, and adds an entry to the Walks table. You may only choose unoccupied destinations. This should also update ActivitiesLocales (as any existing activities you are doing are by definition now available in your new location, but that isn't implemented yet.</p>
+<p>This updates the currently logged in user's localeID in the Users table, and adds an entry to the Walks table.<br>Changing your location automatically removes any current activities associated with you from ActivitiesUsers.<br>Destinations are restricted to unoccupied locales.</p></small>
 <table>
     <form id="addNew" action="/add-walk">
         <tr>
@@ -27,6 +27,9 @@
 </small>
 <br><br>
 <h2>Rename existing Walks:</h2>
+<p>You can rename any walk you want, even if it doesn't belong to you.</p></small>
+
+
 <table>
   <tr>
     <th>walker</th> 
@@ -51,5 +54,5 @@
 </tr>
 {% endfor %}
 </table>
-</div>
+</small>
 {% endblock content %}

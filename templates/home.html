@@ -2,7 +2,7 @@
 {% block content %}
 <h2>Pages</h2>
 <h4>Register</h4>
-<p>The registration page adds a new locale to the Locales table (localeName and an autoincremented localeID) if the locale does not yet exist. If the locale does exist in the Users table, the user should not be permitted to register there. Then the new user is added to the Users table -- firstName, lastName, an autoincremented userID, and the localeID that was just added. </p>
+<p>The registration page adds a new locale to the Locales table (localeName and an autoincremented localeID) if the locale does not yet exist. If the locale already exists in the Users table, the user will not be permitted to register there. Then the new user is added to the Users table -- firstName, lastName, an autoincremented userID, and the localeID that was just added. </p>
 
 <h4>Login</h4>
 <p>The login page uses a select statement to find the user's userID (based on the first and last name they logged in with), which is used to find the user's name, locale, and upcoming and available walks and activities.</p>

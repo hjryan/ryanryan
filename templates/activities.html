@@ -7,8 +7,8 @@
         <input type="submit" value="add!" id="addNewButton">
     </form>
     <p></p>
-    <h2>Edit existing (global) activities:</h2>
-    <p>This renames or deletes activities in the Activities table. Deletions cascade to ActivitiesLocales and ActivitiesUsers.
+    <h2><br>Edit existing (global) activities:</h2>
+    <p>This renames or deletes activities in the Activities table.<br>Deletions cascade to ActivitiesLocales and ActivitiesUsers.
     <table>
     <tr>
         <th>activity name</th> 
@@ -28,7 +28,7 @@
     {% endfor %}
     </table>
     <br>
-    <h2>Add an activity to a locale!</h2>
+    <h2><br>Add an activity to a locale!</h2>
     <p>This adds an entry to ActivitiesLocales.</p>
     <form id="addNew" action='/add-activity-locale'>
         <select name="activityName" id="activityName">
@@ -43,12 +43,15 @@
         </select>
     <input type="submit" value="add!" id="addNewButton">
     </form>
+    
+        <small>Is the locale you're looking for not here? <a class="ml-2" href="{{ url_for('locales') }}">Add a locale</a></small>
+    
     <p></p>
-    <h2>Delete existing activities from your locale:</h2>
-    <p>This deletes entries from ActivitiesLocales. Only activities in your locale are available.</p>
+    <h2><br>Delete existing activities from your locale:</h2>
+    <p>This deletes entries from ActivitiesLocales.<br>Only activities in your locale are available.<br>If you delete your current activity from locales, it will also be deleted from your activities (ActivitiesUsers).</p>
     <table>
     <tr>
-        <th>activityName</th>
+        <th>activity name</th>
     </tr>
     {% for activity in activitiesLocales %}
         <tr>
@@ -61,8 +64,8 @@
     {% endfor %}
     </table>
     <p></p>
-    <h2>Book an activity!</h2>
-    <p>This adds an entry to ActivitiesUsers. Only activities in your locale that you aren't yet doing are available.</p>
+    <h2><br>Book an activity!</h2>
+    <p>This adds an entry to ActivitiesUsers.<br>Only activities in your locale that you aren't currently doing are available.</p>
     <form id="addNew" action='/add-activity-user'>
         <select name="activityID" id="activityID">
             {% for activity in activitiesInYourLocale %}
@@ -72,11 +75,13 @@
     <input type="submit" value="i'm doing this activity now!" id="addNewButton">
     </form>
     <p></p>
-    <h2>Delete my existing activities:</h2>
-    <p>This deletes from ActivitiesUsers. It is dynamically populated to only the current user's activities.</p>
+    <h2><br>Delete my existing activities:</h2>
+    <p>This deletes from ActivitiesUsers.
+        <br>Only your current activities are available.
+    </p>
     <table>
     <tr>
-        <th>activityName</th>
+        <th>activity name</th>
     </tr>
     {% for activityUser in activitiesUsers %}
         <tr>
@@ -88,4 +93,5 @@
         </tr>
     {% endfor %}
     </table>
+    <h2><br></h2>
 {% endblock content %}
