@@ -1,13 +1,14 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h2>Add an activity!</h2>
-    <p>This adds an entry to Activities</p>
+    <p>This adds an entry to Activities.</p>
     <form id="addNew" action="/add-activity">
         <input type="text" name="activityName" placeholder="activity name">
         <input type="submit" value="add!" id="addNewButton">
     </form>
     <p></p>
     <h2>Edit existing (global) activities:</h2>
+    <p>This renames or deletes activities in the Activities table. Deletions cascade to ActivitiesLocales and ActivitiesUsers.
     <table>
     <tr>
         <th>activity name</th> 
@@ -28,7 +29,7 @@
     </table>
     <br>
     <h2>Add an activity to a locale!</h2>
-    <p>This adds an entry to ActivitiesLocales</p>
+    <p>This adds an entry to ActivitiesLocales.</p>
     <form id="addNew" action='/add-activity-locale'>
         <select name="activityName" id="activityName">
             {% for activity in activities %}

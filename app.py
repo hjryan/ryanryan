@@ -60,13 +60,43 @@ def addActLoc():
     # get user input
     activityID = request.args.get('activityName')
     localeID = request.args.get('localeName')
+
+    # get activity name (for pop-up)
+    activityName = cur.execute("""
+        SELECT activityName 
+        FROM Activities 
+        WHERE activityID = (?) 
+        """,[activityID]).fetchone()[0]
+
+    # get locale name based on localeID for popup
+    localeName = (cur.execute("""
+        SELECT localeName 
+        FROM Locales 
+        WHERE localeID = (?)
+        """, [localeID]).fetchone())[0]
     
-    # inset input into ActivitiesLocales
-    if activityID and localeID:
+    # check if locale already includes activity
+    existingRelationship = (cur.execute("""
+        SELECT activityID 
+        FROM ActivitiesLocales 
+        WHERE activityID = (?) 
+        AND localeID = (?)
+        """,(activityID, localeID)).fetchone())
+
+    # if not,
+    if existingRelationship is None:
+
+        # add ActivityLocale
         cur.execute("""
             INSERT INTO ActivitiesLocales (activityID, localeID) 
-            VALUES (?, ?)""", 
-            (activityID, localeID))
+            VALUES (?, ?)
+            """,(activityID, localeID))
+
+        flash(f"{activityName} has been added to {localeName}!", 'success')
+    
+    # if existingRelationship exists, skip add and show error
+    else:
+        flash(f"{activityName} already exists in {localeName}!", 'danger')
     
     # close connection
     db.commit()

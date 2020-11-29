@@ -13,6 +13,20 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
+	<style> 
+        /* this has to be here to override bootstrap lol */ 
+         
+        .navbar-custom { 
+            background-color: #284380; 
+        } 
+
+        .navbar-custom .navbar-brand, 
+        .navbar-custom .navbar-text { 
+            color: white; 
+
+        } 
+    </style>
+
 	{% if title %}
 	<title>Quarpedia - {{ title }}</title>
 	{% else %}
@@ -21,7 +35,7 @@
 </head>
 <body>
 	<header class="site-header">
-		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		<nav class="navbar navbar-expand-md fixed-top navbar-custom">
 			<div class="container">
 				<a class="navbar-brand mr-4" href="/">Quarpedia</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
