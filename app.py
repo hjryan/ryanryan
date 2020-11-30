@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, session, g
 from db_con import get_db
 import sqlite3
+import time
 
 
 app = Flask(__name__)
@@ -737,6 +738,8 @@ def reset_db():
 
     # reset session data
     session.clear()
+
+    time.sleep( 5 )
 
     return redirect('/login')
 
