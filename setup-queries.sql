@@ -1,4 +1,3 @@
-PRAGMA foreign_keys = ON;
 DROP TABLE IF EXISTS ActivitiesUsers;
 DROP TABLE IF EXISTS ActivitiesLocales;
 DROP TABLE IF EXISTS Users;
