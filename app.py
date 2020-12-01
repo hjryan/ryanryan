@@ -731,7 +731,7 @@ def reset_db():
     
     with webapp.app_context():
         db = get_db()
-        with app.open_resource('setup-queries.sql', mode='r') as file:
+        with webapp.open_resource('setup-queries.sql', mode='r') as file:
             db.cursor().executescript(file.read())
         db.commit()
     print("Database Reset")
