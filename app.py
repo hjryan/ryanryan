@@ -4,17 +4,17 @@ import sqlite3
 import time
 
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
+webapp = Flask(__name__)
+webapp.config['SECRET_KEY'] = 'gilq34uiufgo39qwo7867854ww'
 
 # auto-closes db connection at the end of each request
-@app.teardown_appcontext
+@webapp.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
 
-@app.route('/')
+@webapp.route('/')
 def index():
     # open connection
     db = get_db()
@@ -44,14 +44,14 @@ def index():
             activities=activities)
 
 
-@app.route('/home')
+@webapp.route('/home')
 def home():
     
     # this is the index page
     return render_template('home.html')
 
 
-@app.route('/add-activity-locale', methods=['GET'])
+@webapp.route('/add-activity-locale', methods=['GET'])
 def addActLoc():
 
     # open connection
@@ -105,7 +105,7 @@ def addActLoc():
     return redirect('/activities')
 
 
-@app.route('/delete-activity-locale', methods=['GET'])
+@webapp.route('/delete-activity-locale', methods=['GET'])
 def deleteActivityLocale(activityName=None):
 
     # open connection
@@ -142,7 +142,7 @@ def deleteActivityLocale(activityName=None):
     return redirect('/activities')
 
 
-@app.route('/delete-activity-user', methods=['GET'])
+@webapp.route('/delete-activity-user', methods=['GET'])
 def deleteActivityUser(activityName=None):
 
     # open connection
@@ -167,7 +167,7 @@ def deleteActivityUser(activityName=None):
     return redirect('/activities')
 
 
-@app.route('/add-activity-user', methods=['GET'])
+@webapp.route('/add-activity-user', methods=['GET'])
 def addActivityUser():
     
     # open connection
@@ -213,7 +213,7 @@ def addActivityUser():
     return redirect('/')  
 
 
-@app.route('/add-activity', methods=['GET'])
+@webapp.route('/add-activity', methods=['GET'])
 def addActivity(activityName=None):
 
     # open connection
@@ -236,7 +236,7 @@ def addActivity(activityName=None):
     return redirect('/activities')
 
 
-@app.route('/update-activity', methods=['GET'])
+@webapp.route('/update-activity', methods=['GET'])
 def updateActivity(activityName=None):
 
     # open connection
@@ -260,7 +260,7 @@ def updateActivity(activityName=None):
     return redirect('/activities')
 
 
-@app.route('/delete-activity', methods=['GET'])
+@webapp.route('/delete-activity', methods=['GET'])
 def deleteActivity(activityName=None):
 
     # open connection
@@ -282,7 +282,7 @@ def deleteActivity(activityName=None):
     return redirect('/activities')
 
 
-@app.route('/activities')
+@webapp.route('/activities')
 def activities():
 
     # if there is no current session, send user to login
@@ -362,7 +362,7 @@ def activities():
         activitiesInYourLocale=activitiesInYourLocale)
 
 
-@app.route('/add-walk', methods=['GET'])
+@webapp.route('/add-walk', methods=['GET'])
 def addWalk(walkName=None):
 
     # open connection
@@ -419,7 +419,7 @@ def addWalk(walkName=None):
     return redirect('/walks')
 
 
-@app.route('/update-walk', methods=['GET'])
+@webapp.route('/update-walk', methods=['GET'])
 def updateWalk(walkName=None):
 
     # open connection
@@ -443,7 +443,7 @@ def updateWalk(walkName=None):
     return redirect('/walks')
 
 
-@app.route('/delete-walk', methods=['GET'])
+@webapp.route('/delete-walk', methods=['GET'])
 def deleteWalk(walkName=None):
 
     # open connection
@@ -465,7 +465,7 @@ def deleteWalk(walkName=None):
     return redirect('/walks')
 
 
-@app.route('/walks')
+@webapp.route('/walks')
 def walks():
 
     # if there is no current session, send user to login
@@ -509,7 +509,7 @@ def walks():
         data=data)
 
 
-@app.route('/add-locale', methods=['GET'])
+@webapp.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
     
     # open connection
@@ -532,7 +532,7 @@ def addLocale(localeName=None):
     return redirect('/locales')
 
 
-@app.route('/locales')
+@webapp.route('/locales')
 def locales():
     
     # if there is no current session, send user to login
@@ -564,7 +564,7 @@ def locales():
         locales=locales)
 
 
-@app.route('/complete-registration', methods=['GET'])
+@webapp.route('/complete-registration', methods=['GET'])
 def completeRegistration(firstName=None, lastName=None, localeName=None):
     
     # reset session data
@@ -641,12 +641,12 @@ def completeRegistration(firstName=None, lastName=None, localeName=None):
     return redirect('/register') 
 
 
-@app.route('/register', methods=['GET'])
+@webapp.route('/register', methods=['GET'])
 def register(localeName=None):
     return render_template('register.html', title='Register')
 
 
-@app.route('/complete-login', methods=['GET'])
+@webapp.route('/complete-login', methods=['GET'])
 def completeLogin(localeName=None):
     # reset session data
     session.clear()
@@ -721,15 +721,15 @@ def completeLogin(localeName=None):
         return redirect('/')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@webapp.route('/login', methods=['GET', 'POST'])
 def login():
     return render_template('login.html', title='Log In')
 
 
-@app.route('/reset-db')
+@webapp.route('/reset-db')
 def reset_db():
     
-    with app.app_context():
+    with webapp.app_context():
         db = get_db()
         with app.open_resource('setup-queries.sql', mode='r') as file:
             db.cursor().executescript(file.read())
@@ -739,24 +739,16 @@ def reset_db():
     # reset session data
     session.clear()
 
-    time.sleep( 5 )
-
     return redirect('/login')
 
 
-@app.route('/logout')
+@webapp.route('/logout')
 def logout():
     
     # reset session data
     session.clear()
     
     return redirect('/login')
-
-
-@app.errorhandler(Exception)
-def exception_handler(error):
-    # if the database is down, reset it
-    return redirect('/reset-db')
 
 
 if __name__ == '__main__':
