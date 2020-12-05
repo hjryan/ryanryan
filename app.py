@@ -114,6 +114,13 @@ def deleteActivityLocale(activityName=None):
     
     # get user input
     activityID = request.args.get('activityID')
+
+    # get activityName based on activityID
+    activityName = (cur.execute("""
+        SELECT activityName 
+        FROM Activities 
+        WHERE activityID = (?)
+        """,[activityID]).fetchone())[0]
     
     # get localeID based on localeName
     localeID = (cur.execute("""
@@ -128,6 +135,8 @@ def deleteActivityLocale(activityName=None):
         WHERE activityID = (?)
         AND localeID = (?)
         """,(activityID, localeID,))
+
+    flash(f"{activityName} has been deleted from {session['localeName']}!", 'success')
 
     # if an activity is no longer available in a locale, delete for user in that locale
     cur.execute("""
@@ -152,7 +161,12 @@ def deleteActivityUser(activityName=None):
     # get user input
     activityID = request.args.get('activityID')
 
-    print("activityID: ", activityID, "userID: ", session['userID'])
+    # get activityName based on activityID
+    activityName = (cur.execute("""
+        SELECT activityName 
+        FROM Activities 
+        WHERE activityID = (?)
+        """,[activityID]).fetchone())[0]
     
     # delete activity
     cur.execute("""
@@ -160,6 +174,8 @@ def deleteActivityUser(activityName=None):
         WHERE activityID = (?)
         AND userID = (?)
         """,(activityID, session['userID'],))
+
+    flash(f"{session['firstName']} is no longer engaged in {activityName}!", 'success')
 
     # close connection
     db.commit()
