@@ -249,6 +249,9 @@ def updateActivity(activityName=None):
     activityName = request.args.get('activityName')
     activityID = request.args.get('activityID')
 
+    if not activityName:
+        return redirect('/activities')
+
     # get oldActivityName based on activityID
     oldActivityName = (cur.execute("""
         SELECT activityName 
@@ -452,6 +455,9 @@ def updateWalk(walkName=None):
     walkName = request.args.get('walkName')
     walkID = request.args.get('walkID')
 
+    if not walkName:
+        return redirect('/walks')
+
     # get oldWalkName based on walkID
     oldWalkName = (cur.execute("""
         SELECT walkName 
@@ -599,6 +605,8 @@ def updateLocale(localeName=None):
     localeName = request.args.get('localeName')
     localeID = request.args.get('localeID')
 
+    if not localeName:
+        return redirect('/locales')
     # get old locale name based on localeID for popup
     oldLocaleName = (cur.execute("""
         SELECT localeName 
