@@ -10,17 +10,21 @@
     <h2>Edit existing locales:</h2>
     <table>
     <tr>
-        <th>locale ID</th>
         <th>locale name</th> 
         <th>first name</th>
     </tr>
     {% for locale in locales %}
         <tr>
-            <td>{{locale['localeID']}}</td>
-            <td>{{locale['localeName']}}</td>
+            <form id="updateExisting" action="/update-locale">
+            <input type="hidden" name="localeID" value="{{locale['localeID']}}">
+            <td><input type="text" name="localeName" placeholder="{{locale['localeName']}}"></td>
             <td>{{locale['firstName']}}</td>
             <td><input type="submit" value="update" id="updateButton" required></td>
+            </form>
+            <form id="deleteExisting" action="/delete-locale">
+            <input type="hidden" name="localeID" value="{{locale['localeID']}}">
             <td><input type="submit" value="delete" id="deleteButton" required></td>
+            </form>
         </tr>
     {% endfor %}
     </table>

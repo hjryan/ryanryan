@@ -230,6 +230,8 @@ def addActivity(activityName=None):
             VALUES (?)
             """,(activityName,))
 
+    flash(f"{activityName} has been added!", 'success')
+
     # close connection
     db.commit()
 
@@ -246,6 +248,13 @@ def updateActivity(activityName=None):
     # get user input
     activityName = request.args.get('activityName')
     activityID = request.args.get('activityID')
+
+    # get oldActivityName based on activityID
+    oldActivityName = (cur.execute("""
+        SELECT activityName 
+        FROM Activities 
+        WHERE activityID = (?)
+        """,[activityID]).fetchone())[0]
     
     # update activity name
     cur.execute("""
@@ -253,6 +262,8 @@ def updateActivity(activityName=None):
         SET activityName = (?) 
         WHERE activityID = (?)
         """,(activityName, activityID,))
+
+    flash(f"{oldActivityName} is now {activityName}!", 'success')
 
     # close connection
     db.commit()
@@ -269,12 +280,21 @@ def deleteActivity(activityName=None):
     
     # get user input
     activityID = request.args.get('activityID')
+
+    # get activityName based on activityID
+    activityName = (cur.execute("""
+        SELECT activityName 
+        FROM Activities 
+        WHERE activityID = (?)
+        """,[activityID]).fetchone())[0]
     
     # delete activity
     cur.execute("""
         DELETE FROM Activities 
         WHERE activityID = (?)
         """,(activityID,))
+
+    flash(f"{activityName} has been deleted!", 'success')
 
     # close connection
     db.commit()
@@ -412,6 +432,8 @@ def addWalk(walkName=None):
         DELETE FROM ActivitiesUsers
         WHERE userID = (?)
         """,(userID,))
+
+    flash(f"{walkName} has been added!", 'success')
     
     # close connection
     db.commit()
@@ -429,6 +451,13 @@ def updateWalk(walkName=None):
     # get user input
     walkName = request.args.get('walkName')
     walkID = request.args.get('walkID')
+
+    # get oldWalkName based on walkID
+    oldWalkName = (cur.execute("""
+        SELECT walkName 
+        FROM Walks 
+        WHERE walkID = (?)
+        """,[walkID]).fetchone())[0]
     
     # update walk name
     cur.execute("""
@@ -436,6 +465,8 @@ def updateWalk(walkName=None):
         SET walkName = (?) 
         WHERE walkID = (?)
         """,(walkName, walkID,))
+
+    flash(f"{oldWalkName} is now {walkName}!", 'success')
 
     # close connection
     db.commit()
@@ -453,11 +484,20 @@ def deleteWalk(walkName=None):
     # get user input
     walkID = request.args.get('walkID')
     
-    # update walk name
+    # get walkName based on walkID
+    walkName = (cur.execute("""
+        SELECT walkName 
+        FROM Walks 
+        WHERE walkID = (?)
+        """,[walkID]).fetchone())[0]
+    
+    # delete walk
     cur.execute("""
         DELETE FROM Walks 
         WHERE walkID = (?)
         """,(walkID,))
+
+    flash(f"{walkName} has been deleted!", 'success')
 
     # close connection
     db.commit()
@@ -509,6 +549,81 @@ def walks():
         data=data)
 
 
+@webapp.route('/delete-locale', methods=['GET'])
+def deleteLocale(localeName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    localeID = request.args.get('localeID')
+
+    # get locale name based on localeID for popup
+    localeName = (cur.execute("""
+        SELECT localeName 
+        FROM Locales 
+        WHERE localeID = (?)
+        """, [localeID]).fetchone())[0]
+
+    # check if anyone is there
+    userID = (cur.execute("""
+        SELECT userID 
+        FROM Users 
+        WHERE localeID = (?)
+        """, [localeID]).fetchone())
+    if userID is None:
+        # delete locale
+        cur.execute("""
+        DELETE FROM Locales 
+        WHERE localeID = (?)
+        """,(localeID,))
+        flash(f"{localeName} has been deleted!", 'success')
+    else:
+        flash(f"{localeName} has not been deleted -- someone is there!", 'danger')
+
+    # close connection
+    db.commit()
+
+    return redirect('/locales')
+
+
+@webapp.route('/update-locale', methods=['GET'])
+def updateLocale(localeName=None):
+
+    # open connection
+    db = get_db()
+    cur = db.cursor()
+    
+    # get user input
+    localeName = request.args.get('localeName')
+    localeID = request.args.get('localeID')
+
+    # get old locale name based on localeID for popup
+    oldLocaleName = (cur.execute("""
+        SELECT localeName 
+        FROM Locales 
+        WHERE localeID = (?)
+        """, [localeID]).fetchone())[0]
+    
+    # update locale name
+    cur.execute("""
+        UPDATE Locales 
+        SET localeName = (?) 
+        WHERE localeID = (?)
+        """,(localeName, localeID,))
+    flash(f"{oldLocaleName} is now {localeName}!", 'success')
+
+    # update session if locale updated was user's locale
+    if session['localeName'] == oldLocaleName:
+        session['localeName'] = localeName
+
+    # close connection
+    db.commit()
+
+    return redirect('/locales')
+
+
 @webapp.route('/add-locale', methods=['GET'])
 def addLocale(localeName=None):
     
@@ -525,6 +640,8 @@ def addLocale(localeName=None):
         Locales (localeName) 
         VALUES (?)
         """, (localeName,))
+
+    flash(f"{localeName} has been added!", 'success')
     
     # close connection
     db.commit()
@@ -752,4 +869,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    webapp.run(debug=True)

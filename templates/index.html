@@ -1,11 +1,12 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div>
-    <h4>Hi {{ user.firstName }}, welcome to your source for Thrilling Quarantine Activities</h4>
+    <h4>Hi {{ user.firstName }}!
+    <br><br>Welcome to your source for Thrilling Quarantine Activities</h4>
     <br>
     <h5>Current Locale: {{ user.localeName }} </h5>
     <p><small>
-        Are you tired of being here here? (VIBE) To change your locale,<a class="ml-2" href="{{ url_for('walks') }}"> please select a walk at the walks page.</a>
+        Are you tired of being in {{ user.localeName }}? (VIBE) To change your locale,<a class="ml-2" href="{{ url_for('walks') }}"> please select a walk at the walks page.</a>
     </small></p><br>
 
     <h5>Current Activites</h5>
