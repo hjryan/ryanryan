@@ -1,4 +1,4 @@
 # ryanryan
-Hannah and Ryan build a database
+Hannah and Gurt build a database
 
 https://quarpedia.herokuapp.com
